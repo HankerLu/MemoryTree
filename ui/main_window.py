@@ -4,11 +4,13 @@ from PyQt5.QtCore import Qt
 import json
 import os
 from agents.conversation_agent import ConversationAgent
+from agents.narrative_agent import NarrativeAgent
 
 class MainWindow(QMainWindow):
     def __init__(self, conversation_agent):
         super().__init__()
         self.conversation_agent = conversation_agent
+        self.narrative_agent = NarrativeAgent()
         self.setWindowTitle("记忆树对话系统")
         self.setGeometry(100, 100, 1200, 800)
         
@@ -98,7 +100,21 @@ class MainWindow(QMainWindow):
     
     def generate_narrative(self):
         """生成叙事体的槽函数"""
-        pass
+        try:
+            # 获取当前对话历史
+            conversation_history = self.conversation_agent.get_conversation_history()
+            if not conversation_history:
+                self.show_error("对话历史为空，无法生成叙事体")
+                return
+            
+            # 使用 narrative_agent 生成叙事体
+            narrative = self.narrative_agent.generate_narrative(conversation_history)
+            
+            # 在叙事体文本框中显示结果
+            self.narrative_text.setText(narrative)
+            
+        except Exception as e:
+            self.show_error(f"生成叙事体时发生错误：{str(e)}")
     
     def save_narrative(self):
         """保存叙事体的槽函数"""
