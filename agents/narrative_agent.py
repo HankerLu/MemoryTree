@@ -19,12 +19,13 @@ class NarrativeAgent:
             if not dialogue:
                 return "对话历史中没有有效的对话内容"
             
-            prompt = f"""请将以下对话转换成一篇流畅的第一人称回忆录叙事体。要求：
-1. 以自然的叙事方式展现对话内容
-2. 保留对话中的关键信息和情感
-3. 使用适当的过渡词连接各个部分
-4. 注意时间和情节的连贯性
-5. 将"我"的对话内容作为叙述者的视角
+            prompt = f"""请将以下对话内容转换成一篇流畅的第一人称回忆录叙事体。要求：
+1. 只关注对话中"user"（讲述者）所分享的经历和故事内容
+2. 以讲述者的第一人称视角展开叙述
+3. 忽略采访者的提问和回应，仅将其作为引出故事的线索
+4. 将零散的对话内容重新组织成连贯的叙事
+5. 保持原有故事的情感基调和关键细节
+6. 使用优美流畅的文���语言
 
 对话内容：
 {self._format_conversation(dialogue)}"""
@@ -48,6 +49,6 @@ class NarrativeAgent:
         """格式化对话历史"""
         formatted = []
         for msg in conversation_history:
-            role = "我" if msg["role"] == "user" else "采访者"
+            role = "讲述者" if msg["role"] == "user" else "采访者"
             formatted.append(f"{role}：{msg['content']}")
         return "\n".join(formatted) 
