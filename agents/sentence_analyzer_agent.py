@@ -6,7 +6,7 @@ load_dotenv()
 
 class SentenceAnalyzerAgent:
     def __init__(self):
-        self.api_key = os.getenv("e64b996267bee6ba0252a5d46a143ff4.3RZ8v4qZ2DbYoJbk")
+        self.api_key = os.getenv("API_KEY_CONF")
         zhipuai.api_key = self.api_key
         
     def analyze_narrative(self, narrative_text):
@@ -27,16 +27,13 @@ class SentenceAnalyzerAgent:
 ---"""
         
         try:
-            response = zhipuai.model_api.invoke(
+            response = zhipuai.ZhipuAI().chat.completions.create(
                 model="chatglm_turbo",
-                prompt=[{"role": "user", "content": prompt}],
+                messages=[{"role": "user", "content": prompt}],
                 temperature=0.5,
             )
             
-            if response.get("code") == 200:
-                return response["data"]["choices"][0]["content"]
-            else:
-                return f"错误：{response.get('msg', '未知错误')}"
+            return response.choices[0].message.content
                 
         except Exception as e:
             return f"发生错误：{str(e)}"

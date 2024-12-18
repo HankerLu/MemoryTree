@@ -6,8 +6,11 @@ load_dotenv()
 
 class ConversationAgent:
     def __init__(self):
-        self.api_key = os.getenv("e64b996267bee6ba0252a5d46a143ff4.3RZ8v4qZ2DbYoJbk")
-        zhipuai.api_key = self.api_key
+        self.api_key = os.getenv("API_KEY_CONF")
+        print(f"Debug - API密钥: {self.api_key}")  # 仅用于调试
+        if not self.api_key:
+            raise ValueError("未找到API密钥，请检查环境变量 API_KEY_CONF")
+        self.client = zhipuai.ZhipuAI(api_key=self.api_key)
         self.conversation_history = []
         
     def chat(self, user_input):
@@ -15,20 +18,18 @@ class ConversationAgent:
         self.conversation_history.append({"role": "user", "content": user_input})
         
         try:
-            response = zhipuai.model_api.invoke(
-                model="chatglm_turbo",
-                prompt=self.conversation_history,
+            response = self.client.chat.completions.create(
+                model="glm-4",
+                messages=self.conversation_history,
                 temperature=0.7,
             )
             
-            if response.get("code") == 200:
-                assistant_response = response["data"]["choices"][0]["content"]
-                self.conversation_history.append({"role": "assistant", "content": assistant_response})
-                return assistant_response
-            else:
-                return f"错误：{response.get('msg', '未知错误')}"
+            assistant_response = response.choices[0].message.content
+            self.conversation_history.append({"role": "assistant", "content": assistant_response})
+            return assistant_response
                 
         except Exception as e:
+            print(f"发生错误：{str(e)}")
             return f"发生错误：{str(e)}"
     
     def get_conversation_history(self):
