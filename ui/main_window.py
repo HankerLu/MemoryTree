@@ -101,8 +101,25 @@ class MainWindow(QMainWindow):
     def generate_narrative(self):
         """生成叙事体的槽函数"""
         try:
-            # 获取当前对话历史
-            conversation_history = self.conversation_agent.get_conversation_history()
+            # 打开文件选择对话框，限定为json文件
+            file_name, _ = QFileDialog.getOpenFileName(
+                self,
+                "选择对话历史文件",
+                "logs/",  # 默认打开logs文件夹
+                "JSON文件 (*.json);;所有文件 (*.*)"
+            )
+            
+            if not file_name:  # 用户取消选择
+                return
+            
+            # 读取选中的对话历史文件
+            try:
+                with open(file_name, 'r', encoding='utf-8') as f:
+                    conversation_history = json.load(f)
+            except Exception as e:
+                self.show_error(f"读取对话历史文件时发生错误：{str(e)}")
+                return
+            
             if not conversation_history:
                 self.show_error("对话历史为空，无法生成叙事体")
                 return
