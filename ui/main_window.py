@@ -135,12 +135,38 @@ class MainWindow(QMainWindow):
     
     def save_narrative(self):
         """保存叙事体的槽函数"""
-        pass
+        # 获取叙事体内容
+        narrative = self.narrative_text.toPlainText().strip()
+        if not narrative:
+            self.show_error("没有可保存的叙事体内容")
+            return
+            
+        # 打开文件保存对话框
+        file_name, _ = QFileDialog.getSaveFileName(
+            self,
+            "保存叙事体",
+            "narratives/",  # 默认保存到narratives文件夹
+            "文本文件 (*.txt);;所有文件 (*.*)"
+        )
+        
+        if file_name:  # 如果用户选择了保存位置
+            try:
+                # 确保目标目录存在
+                os.makedirs(os.path.dirname(file_name), exist_ok=True)
+                
+                # 保存文件
+                with open(file_name, 'w', encoding='utf-8') as f:
+                    f.write(narrative)
+                    
+                QMessageBox.information(self, "成功", "叙事体已成功保存！")
+                
+            except Exception as e:
+                self.show_error(f"保存文件时发生错误：{str(e)}")
     
     def analyze_sentences(self):
         """分析句子的槽函数"""
         pass
     
     def show_error(self, message):
-        """显示错误消息"""
+        """显示错误���息"""
         QMessageBox.critical(self, "错误", message) 
