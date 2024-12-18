@@ -1,6 +1,8 @@
 import zhipuai
 import os
 from dotenv import load_dotenv
+import json
+from datetime import datetime
 
 load_dotenv()
 
@@ -13,6 +15,9 @@ class ConversationAgent:
         self.client = zhipuai.ZhipuAI(api_key=self.api_key)
         self.conversation_history = []
         self.init_conversation_history()
+        self.log_file = f"logs/conversation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        os.makedirs('logs', exist_ok=True)
+        self.save_history()
 
     def init_conversation_history(self):
         """初始化对话历史"""
@@ -31,6 +36,14 @@ class ConversationAgent:
         ]
         self.conversation_history = messages
         
+    def save_history(self):
+        """保存对话历史到日志文件"""
+        try:
+            with open(self.log_file, 'w', encoding='utf-8') as f:
+                json.dump(self.conversation_history, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            print(f"保存对话历史时发生错误：{str(e)}")
+
     def chat(self, user_input):
         """与用户进行对话"""
         self.conversation_history.append({"role": "user", "content": user_input})
@@ -44,6 +57,7 @@ class ConversationAgent:
             
             assistant_response = response.choices[0].message.content
             self.conversation_history.append({"role": "assistant", "content": assistant_response})
+            self.save_history()  # 每次对话后保存历史
             return assistant_response
                 
         except Exception as e:
@@ -56,4 +70,5 @@ class ConversationAgent:
     
     def clear_history(self):
         """清空对话历史"""
-        self.conversation_history = [] 
+        self.conversation_history = []
+        self.save_history()  # 清空后也保存一次
