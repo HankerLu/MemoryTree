@@ -57,6 +57,10 @@ class MainWindow(QMainWindow):
         save_narrative_button = QPushButton("保存叙事体")
         save_narrative_button.clicked.connect(self.save_narrative)
         
+        # 添加卡片生成按钮
+        generate_card_button = QPushButton("卡片生成")
+        generate_card_button.clicked.connect(self.generate_card)
+        
         # 句子分析区域
         self.analysis_text = QTextEdit()
         self.analysis_text.setReadOnly(True)
@@ -67,6 +71,7 @@ class MainWindow(QMainWindow):
         right_layout.addWidget(self.narrative_text)
         right_layout.addWidget(generate_narrative_button)
         right_layout.addWidget(save_narrative_button)
+        right_layout.addWidget(generate_card_button)
         right_layout.addWidget(QLabel("句子分析结果"))
         right_layout.addWidget(self.analysis_text)
         right_layout.addWidget(analyze_button)
@@ -167,6 +172,50 @@ class MainWindow(QMainWindow):
         """分析句子的槽函数"""
         pass
     
+    def generate_card(self):
+        """生成SVG卡片的槽函数"""
+        narrative = self.narrative_text.toPlainText().strip()
+        if not narrative:
+            self.show_error("没有可生成卡片的叙事体内容")
+            return
+        
+        # 打开文件保存对话框
+        file_name, _ = QFileDialog.getSaveFileName(
+            self,
+            "保存SVG卡片",
+            "cards/",  # 默认保存到cards文件夹
+            "SVG文件 (*.svg);;所有文件 (*.*)"
+        )
+        
+        if file_name:  # 如果用户选择了保存位置
+            try:
+                # 确保目标目录存在
+                os.makedirs(os.path.dirname(file_name), exist_ok=True)
+                
+                # 生成SVG内容
+                svg_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="#f0f0f0"/>
+    <rect x="40" y="40" width="720" height="520" fill="white" 
+        stroke="#333" stroke-width="2" rx="15"/>
+    <foreignObject x="60" y="60" width="680" height="480">
+        <div xmlns="http://www.w3.org/1999/xhtml" 
+            style="font-family: Arial, sans-serif; font-size: 16px; 
+            color: #333; line-height: 1.6; padding: 20px;">
+            {narrative.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')}
+        </div>
+    </foreignObject>
+</svg>'''
+                
+                # 保存SVG文件
+                with open(file_name, 'w', encoding='utf-8') as f:
+                    f.write(svg_content)
+                    
+                QMessageBox.information(self, "成功", "SVG卡片已成功生成！")
+                
+            except Exception as e:
+                self.show_error(f"生成SVG卡片时发生错误：{str(e)}")
+    
     def show_error(self, message):
-        """显示错误���息"""
+        """显示错误信息"""
         QMessageBox.critical(self, "错误", message) 
