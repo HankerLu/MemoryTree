@@ -3,10 +3,12 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
 from PyQt5.QtCore import Qt
 import json
 import os
+from agents.conversation_agent import ConversationAgent
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, conversation_agent):
         super().__init__()
+        self.conversation_agent = conversation_agent
         self.setWindowTitle("记忆树对话系统")
         self.setGeometry(100, 100, 1200, 800)
         
@@ -73,7 +75,22 @@ class MainWindow(QMainWindow):
         
     def send_message(self):
         """发送消息的槽函数"""
-        pass
+        # 获取用户输入
+        user_input = self.input_box.toPlainText().strip()
+        if not user_input:
+            return
+            
+        # 在聊天历史中显示用户输入
+        self.chat_history.append(f"用户: {user_input}")
+        self.input_box.clear()
+        
+        # 获取AI响应
+        try:
+            response = self.conversation_agent.chat(user_input)
+            self.chat_history.append(f"助手: {response}")
+        except Exception as e:
+            self.show_error(f"发送消息时发生错误：{str(e)}")
+            print(f"发送消息时发生错误：{str(e)}")
     
     def clear_chat(self):
         """清空对话历史的槽函数"""

@@ -12,18 +12,18 @@ class MemoryTreeApp:
         # 在创建 QApplication 之前设置信号处理
         signal.signal(signal.SIGINT, signal.SIG_DFL)  # 恢复默认的 SIGINT 处理
         
+        # 初始化各个Agent
+        self.conversation_agent = ConversationAgent()
+        self.narrative_agent = NarrativeAgent()
+        self.sentence_analyzer = SentenceAnalyzerAgent()
+        
         self.app = QApplication(sys.argv)
-        self.window = MainWindow()
+        self.window = MainWindow(self.conversation_agent)
         
         # 设置定时器来检查信号
         self.timer = QTimer()
         self.timer.timeout.connect(self.check_signal)
         self.timer.start(500)  # 每500毫秒检查一次
-        
-        # 初始化各个Agent
-        self.conversation_agent = ConversationAgent()
-        self.narrative_agent = NarrativeAgent()
-        self.sentence_analyzer = SentenceAnalyzerAgent()
         
         # 连接信号和槽
         self.setup_connections()
