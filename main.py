@@ -1,4 +1,5 @@
 import sys
+import signal
 from PyQt5.QtWidgets import QApplication
 from ui.main_window import MainWindow
 from agents.conversation_agent import ConversationAgent
@@ -7,6 +8,9 @@ from agents.sentence_analyzer_agent import SentenceAnalyzerAgent
 
 class MemoryTreeApp:
     def __init__(self):
+        # 设置信号处理
+        signal.signal(signal.SIGINT, self.signal_handler)
+        
         self.app = QApplication(sys.argv)
         self.window = MainWindow()
         
@@ -17,6 +21,12 @@ class MemoryTreeApp:
         
         # 连接信号和槽
         self.setup_connections()
+        
+    def signal_handler(self, signum, frame):
+        """处理 Ctrl+C 信号"""
+        print("\n正在退出程序...")
+        self.app.quit()
+        sys.exit(0)
         
     def setup_connections(self):
         """设置信号和槽的连接"""
@@ -90,6 +100,8 @@ class MemoryTreeApp:
     def run(self):
         """运行应用程序"""
         self.window.show()
+        # 确保在主事件循环中也能处理 Ctrl+C
+        timer = self.app.startTimer(500)
         return self.app.exec_()
 
 if __name__ == "__main__":
