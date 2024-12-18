@@ -1,6 +1,7 @@
 import sys
 import signal
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import QTimer
 from ui.main_window import MainWindow
 from agents.conversation_agent import ConversationAgent
 from agents.narrative_agent import NarrativeAgent
@@ -8,11 +9,16 @@ from agents.sentence_analyzer_agent import SentenceAnalyzerAgent
 
 class MemoryTreeApp:
     def __init__(self):
-        # 设置信号处理
-        signal.signal(signal.SIGINT, self.signal_handler)
+        # 在创建 QApplication 之前设置信号处理
+        signal.signal(signal.SIGINT, signal.SIG_DFL)  # 恢复默认的 SIGINT 处理
         
         self.app = QApplication(sys.argv)
         self.window = MainWindow()
+        
+        # 设置定时器来检查信号
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.check_signal)
+        self.timer.start(500)  # 每500毫秒检查一次
         
         # 初始化各个Agent
         self.conversation_agent = ConversationAgent()
@@ -22,11 +28,14 @@ class MemoryTreeApp:
         # 连接信号和槽
         self.setup_connections()
         
-    def signal_handler(self, signum, frame):
-        """处理 Ctrl+C 信号"""
-        print("\n正在退出程序...")
-        self.app.quit()
-        sys.exit(0)
+    def check_signal(self):
+        """定期检查是否收到退出信号"""
+        try:
+            # 尝试处理待处理的事件
+            QApplication.processEvents()
+        except KeyboardInterrupt:
+            print("\n正在退出程序...")
+            self.app.quit()
         
     def setup_connections(self):
         """设置信号和槽的连接"""
@@ -100,8 +109,6 @@ class MemoryTreeApp:
     def run(self):
         """运行应用程序"""
         self.window.show()
-        # 确保在主事件循环中也能处理 Ctrl+C
-        timer = self.app.startTimer(500)
         return self.app.exec_()
 
 if __name__ == "__main__":
