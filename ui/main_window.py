@@ -1,10 +1,38 @@
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-                             QPushButton, QTextEdit, QLabel, QFileDialog, QMessageBox)
-from PyQt5.QtCore import Qt
+                             QPushButton, QTextEdit, QLabel, QFileDialog, QMessageBox,
+                             QDialog)
+from PyQt5.QtSvg import QSvgWidget
+from PyQt5.QtCore import Qt, QByteArray
 import json
 import os
+import subprocess
+import platform
 from agents.conversation_agent import ConversationAgent
 from agents.narrative_agent import NarrativeAgent
+
+class SvgViewerDialog(QDialog):
+    def __init__(self, svg_content, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("SVG卡片预览")
+        self.setModal(True)
+        
+        # 设置对话框大小
+        self.resize(850, 650)
+        
+        # 创建布局
+        layout = QVBoxLayout(self)
+        
+        # 创建SVG显示组件
+        svg_widget = QSvgWidget()
+        svg_widget.load(QByteArray(svg_content.encode()))
+        
+        # 添加到布局
+        layout.addWidget(svg_widget)
+        
+        # 添加关闭按钮
+        close_button = QPushButton("关闭")
+        close_button.clicked.connect(self.close)
+        layout.addWidget(close_button)
 
 class MainWindow(QMainWindow):
     def __init__(self, conversation_agent):
@@ -72,7 +100,7 @@ class MainWindow(QMainWindow):
         right_layout.addWidget(generate_narrative_button)
         right_layout.addWidget(save_narrative_button)
         right_layout.addWidget(generate_card_button)
-        right_layout.addWidget(QLabel("句子分析结果"))
+        right_layout.addWidget(QLabel("句子���析结果"))
         right_layout.addWidget(self.analysis_text)
         right_layout.addWidget(analyze_button)
         
@@ -179,21 +207,9 @@ class MainWindow(QMainWindow):
             self.show_error("没有可生成卡片的叙事体内容")
             return
         
-        # 打开文件保存对话框
-        file_name, _ = QFileDialog.getSaveFileName(
-            self,
-            "保存SVG卡片",
-            "cards/",  # 默认保存到cards文件夹
-            "SVG文件 (*.svg);;所有文件 (*.*)"
-        )
-        
-        if file_name:  # 如果用户选择了保存位置
-            try:
-                # 确保目标目录存在
-                os.makedirs(os.path.dirname(file_name), exist_ok=True)
-                
-                # 生成SVG内容
-                svg_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+        try:
+            # 生成SVG内容
+            svg_content = f'''<?xml version="1.0" encoding="UTF-8"?>
 <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
     <rect width="100%" height="100%" fill="#f0f0f0"/>
     <rect x="40" y="40" width="720" height="520" fill="white" 
@@ -206,15 +222,37 @@ class MainWindow(QMainWindow):
         </div>
     </foreignObject>
 </svg>'''
+            
+            # 显示SVG预览对话框
+            dialog = SvgViewerDialog(svg_content, self)
+            dialog.exec_()
+            
+            # 询问是否保存文件
+            reply = QMessageBox.question(self, '保存文件', 
+                                       '是否要保存SVG文件？',
+                                       QMessageBox.Yes | QMessageBox.No)
+            
+            if reply == QMessageBox.Yes:
+                # 打开文件保存对话框
+                file_name, _ = QFileDialog.getSaveFileName(
+                    self,
+                    "保存SVG卡片",
+                    "cards/",  # 默认保存到cards文件夹
+                    "SVG文件 (*.svg);;所有文件 (*.*)"
+                )
                 
-                # 保存SVG文件
-                with open(file_name, 'w', encoding='utf-8') as f:
-                    f.write(svg_content)
+                if file_name:  # 如果用户选择了保存位置
+                    # 确保目标目录存在
+                    os.makedirs(os.path.dirname(file_name), exist_ok=True)
                     
-                QMessageBox.information(self, "成功", "SVG卡片已成功生成！")
+                    # 保存SVG文件
+                    with open(file_name, 'w', encoding='utf-8') as f:
+                        f.write(svg_content)
+                        
+                    QMessageBox.information(self, "成功", "SVG卡片已成功保存！")
                 
-            except Exception as e:
-                self.show_error(f"生成SVG卡片时发生错误：{str(e)}")
+        except Exception as e:
+            self.show_error(f"生成SVG卡片时发生错误：{str(e)}")
     
     def show_error(self, message):
         """显示错误信息"""
