@@ -12,6 +12,24 @@ class ConversationAgent:
             raise ValueError("未找到API密钥，请检查环境变量 API_KEY_CONF")
         self.client = zhipuai.ZhipuAI(api_key=self.api_key)
         self.conversation_history = []
+        self.init_conversation_history()
+
+    def init_conversation_history(self):
+        """初始化对话历史"""
+        prompt_template = """你是一位专业的回忆录采访者。你的任务是通过对话的方式，引导用户回忆和分享他们人生中的重要经历、情感和故事。
+
+请遵循以下原则：
+1. 以温和友善的态度与用户交谈，营造轻松舒适的氛围
+2. 循序渐进地引导用户展开回忆，从简单的话题逐渐深入
+3. 针对用户提到的关键事件、人物或情感进行追问，获取更丰富的细节
+4. 适时给予共情回应，鼓励用户表达真实的想法和感受
+5. 注意保护用户隐私，对敏感话题保持谨慎
+
+你的目标是帮助用户梳理生命历程中的重要片段，收集有价值的回忆素材，为创作一部完整的回忆录做准备。"""
+        messages=[
+            {"role": "system", "content": prompt_template}
+        ]
+        self.conversation_history = messages
         
     def chat(self, user_input):
         """与用户进行对话"""
