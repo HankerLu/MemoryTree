@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
         right_layout.addWidget(generate_narrative_button)
         right_layout.addWidget(save_narrative_button)
         right_layout.addWidget(generate_card_button)
-        right_layout.addWidget(QLabel("句子���析结果"))
+        right_layout.addWidget(QLabel("句子分析结果"))
         right_layout.addWidget(self.analysis_text)
         right_layout.addWidget(analyze_button)
         
@@ -208,19 +208,52 @@ class MainWindow(QMainWindow):
             return
         
         try:
+            # 将文本分段
+            paragraphs = narrative.split('\n\n')
+            # 生成文本的SVG元素
+            text_elements = []
+            y_position = 100  # 起始y坐标
+            
+            for paragraph in paragraphs:
+                # 对段落进行换行处理
+                words = paragraph.strip().split()
+                lines = []
+                current_line = []
+                current_length = 0
+                
+                # 简单的文本换行处理
+                for word in words:
+                    word_length = len(word)
+                    if current_length + word_length <= 30:  # 假设每行大约30个字
+                        current_line.append(word)
+                        current_length += word_length
+                    else:
+                        lines.append(' '.join(current_line))
+                        current_line = [word]
+                        current_length = word_length
+                
+                if current_line:
+                    lines.append(' '.join(current_line))
+                
+                # 生成这个段落的SVG文本元素
+                for line in lines:
+                    text_elements.append(
+                        f'<text x="80" y="{y_position}" '
+                        'font-family="Microsoft YaHei, Arial" '
+                        'font-size="16" fill="#333">'
+                        f'{line}</text>'
+                    )
+                    y_position += 25  # 行间距
+                
+                y_position += 15  # 段落间距
+
             # 生成SVG内容
             svg_content = f'''<?xml version="1.0" encoding="UTF-8"?>
 <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
     <rect width="100%" height="100%" fill="#f0f0f0"/>
     <rect x="40" y="40" width="720" height="520" fill="white" 
         stroke="#333" stroke-width="2" rx="15"/>
-    <foreignObject x="60" y="60" width="680" height="480">
-        <div xmlns="http://www.w3.org/1999/xhtml" 
-            style="font-family: Arial, sans-serif; font-size: 16px; 
-            color: #333; line-height: 1.6; padding: 20px;">
-            {narrative.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')}
-        </div>
-    </foreignObject>
+    {chr(10).join(text_elements)}
 </svg>'''
             
             # 显示SVG预览对话框
