@@ -250,10 +250,53 @@ class MainWindow(QMainWindow):
             # 生成SVG内容
             svg_content = f'''<?xml version="1.0" encoding="UTF-8"?>
 <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
-    <rect width="100%" height="100%" fill="#f0f0f0"/>
-    <rect x="40" y="40" width="720" height="520" fill="white" 
-        stroke="#333" stroke-width="2" rx="15"/>
-    {chr(10).join(text_elements)}
+    <!-- 定义渐变和图案 -->
+    <defs>
+        <!-- 背景渐变 -->
+        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#fff5f5;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#fff0f6;stop-opacity:1" />
+        </linearGradient>
+        
+        <!-- 装饰性图案 -->
+        <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="#ffe3e3" />
+        </pattern>
+    </defs>
+    
+    <!-- 背景层 -->
+    <rect width="100%" height="100%" fill="url(#bgGradient)"/>
+    <rect width="100%" height="100%" fill="url(#dots)"/>
+    
+    <!-- 卡片主体 -->
+    <rect x="40" y="40" width="720" height="520" 
+        fill="white" 
+        stroke="#ffa8a8" 
+        stroke-width="1.5" 
+        rx="25"
+        filter="drop-shadow(0 4px 10px rgba(255, 168, 168, 0.15))"/>
+    
+    <!-- 顶部装饰 -->
+    <path d="M40 65 C 200 55, 600 75, 760 65" 
+        stroke="#ffa8a8" 
+        stroke-width="1.5" 
+        fill="none"/>
+    
+    <!-- 右上角装饰 -->
+    <circle cx="720" cy="80" r="15" fill="#fff0f6" />
+    <circle cx="720" cy="80" r="8" fill="#ffa8a8" opacity="0.6" />
+    
+    <!-- 内容区域 -->
+    <g transform="translate(0, 20)">
+        {chr(10).join(text_elements)}
+    </g>
+    
+    <!-- 底部装饰 -->
+    <path d="M60 520 Q400 530 740 520" 
+        stroke="#ffa8a8" 
+        stroke-width="1" 
+        fill="none" 
+        opacity="0.5"/>
 </svg>'''
             
             # 显示SVG预览对话框
