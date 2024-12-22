@@ -2,8 +2,12 @@ import os
 import zhipuai
 from dotenv import load_dotenv
 import re
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QTextEdit, QProgressBar, QLabel
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QTextEdit, QProgressBar, QLabel, QHBoxLayout, QFileDialog
 from PyQt5.QtCore import QThread, pyqtSignal
+import textwrap
+import svgwrite
+import markdown
+from bs4 import BeautifulSoup
 
 class ConvertThread(QThread):
     """转换处理线程"""
@@ -28,6 +32,94 @@ class ConvertThread(QThread):
         success = self.converter.convert()
         self.finished_signal.emit(success)
 
+class BookGenerator:
+    """书籍生成器类"""
+    def __init__(self):
+        self.page_width = 800
+        self.page_height = 1000
+        self.margin = 50
+        self.line_height = 25
+        self.chars_per_line = 30
+        self.lines_per_page = 30
+        
+    def create_page(self, text, page_num):
+        """创建单个页面的SVG"""
+        # 创建SVG对象
+        dwg = svgwrite.Drawing(size=(self.page_width, self.page_height))
+        
+        # 添加背景
+        dwg.add(dwg.rect(insert=(0, 0), size=('100%', '100%'), 
+                        fill='#f8f9fa', stroke='#dee2e6', stroke_width=2))
+        
+        # 添加装饰边框
+        dwg.add(dwg.rect(insert=(self.margin/2, self.margin/2), 
+                        size=(self.page_width-self.margin, self.page_height-self.margin),
+                        fill='none', stroke='#adb5bd', stroke_width=1))
+        
+        # 添加页码
+        dwg.add(dwg.text(f'- {page_num} -', 
+                        insert=(self.page_width/2, self.page_height-self.margin/2),
+                        font_size=16, text_anchor='middle'))
+        
+        # 分行处理文本
+        lines = textwrap.wrap(text, width=self.chars_per_line)
+        
+        # 添加文本内容
+        for i, line in enumerate(lines[:self.lines_per_page]):
+            y = self.margin + (i+1) * self.line_height
+            dwg.add(dwg.text(line, insert=(self.margin, y), 
+                           font_size=18, font_family='SimSun'))
+            
+        return dwg
+
+    def generate_book(self, markdown_text, output_dir):
+        """生成整本书"""
+        # 将Markdown转换为HTML
+        html = markdown.markdown(markdown_text)
+        soup = BeautifulSoup(html, 'html.parser')
+        text = soup.get_text()
+        
+        # 按页面大小分割文本
+        chars_per_page = self.chars_per_line * self.lines_per_page
+        pages = [text[i:i+chars_per_page] for i in range(0, len(text), chars_per_page)]
+        
+        # 生成每一页的SVG
+        for i, page_text in enumerate(pages, 1):
+            dwg = self.create_page(page_text, i)
+            dwg.saveas(f"{output_dir}/page_{i:03d}.svg")
+            
+        return len(pages)
+
+class GenerateBookThread(QThread):
+    """书籍生成线程"""
+    progress_signal = pyqtSignal(str)
+    progress_value = pyqtSignal(int)
+    finished_signal = pyqtSignal(bool)
+
+    def __init__(self, input_file, output_dir):
+        super().__init__()
+        self.input_file = input_file
+        self.output_dir = output_dir
+        self.generator = BookGenerator()
+
+    def run(self):
+        try:
+            # 读取Markdown文件
+            self.progress_signal.emit("正在读取Markdown文件...")
+            with open(self.input_file, 'r', encoding='utf-8') as f:
+                markdown_text = f.read()
+            
+            # 生成书籍
+            self.progress_signal.emit("正在生成SVG页面...")
+            pages = self.generator.generate_book(markdown_text, self.output_dir)
+            
+            self.progress_signal.emit(f"生成完成！共生成 {pages} 页")
+            self.finished_signal.emit(True)
+            
+        except Exception as e:
+            self.progress_signal.emit(f"生成过程中发生错误：{str(e)}")
+            self.finished_signal.emit(False)
+
 class Chat2StoryGUI(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -43,10 +135,22 @@ class Chat2StoryGUI(QMainWindow):
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout(central_widget)
         
+        # 添加水平布局来放置按钮
+        button_layout = QHBoxLayout()
+        
         # 开始转换按钮
         self.start_button = QPushButton('开始转换', self)
         self.start_button.clicked.connect(self.start_convert)
-        layout.addWidget(self.start_button)
+        button_layout.addWidget(self.start_button)
+        
+        # 生成书籍按钮
+        self.generate_book_button = QPushButton('生成书籍', self)
+        self.generate_book_button.clicked.connect(self.generate_book)
+        self.generate_book_button.setEnabled(False)  # 初始时禁用
+        button_layout.addWidget(self.generate_book_button)
+        
+        # 将按钮布局添加到主布局
+        layout.addLayout(button_layout)
         
         # 进度条
         self.progress_bar = QProgressBar(self)
@@ -89,9 +193,40 @@ class Chat2StoryGUI(QMainWindow):
         if success:
             self.status_label.setText('转换完成')
             self.progress_bar.setValue(100)
+            self.generate_book_button.setEnabled(True)  # 转换成功后启用生成书籍按钮
         else:
             self.status_label.setText('转换失败')
+            self.generate_book_button.setEnabled(False)
+
+    def generate_book(self):
+        """生成书籍处理"""
+        # 选择输出目录
+        output_dir = QFileDialog.getExistingDirectory(self, '选择保存目录')
+        if not output_dir:
+            return
+            
+        self.generate_book_button.setEnabled(False)
+        self.start_button.setEnabled(False)
+        self.progress_bar.setValue(0)
+        self.status_label.setText('正在生成书籍...')
         
+        # 创建并启动生成线程
+        self.book_thread = GenerateBookThread('output.md', output_dir)
+        self.book_thread.progress_signal.connect(self.update_log)
+        self.book_thread.progress_value.connect(self.progress_bar.setValue)
+        self.book_thread.finished_signal.connect(self.book_generation_finished)
+        self.book_thread.start()
+
+    def book_generation_finished(self, success):
+        """书籍生成完成处理"""
+        self.generate_book_button.setEnabled(True)
+        self.start_button.setEnabled(True)
+        if success:
+            self.status_label.setText('书籍生成完成')
+            self.progress_bar.setValue(100)
+        else:
+            self.status_label.setText('书籍生成失败')
+
 class Chat2Story:
     def __init__(self):
         # 加载环境变量
@@ -120,7 +255,7 @@ class Chat2Story:
 答：那是1980年，我刚大学毕业。来的时候正是夏天，特别热。"
 
 转换后：
-"1980年的盛夏，我怀着憧憬来到这座城市。那时我刚从大学毕业，年轻气盛，对未来充满期待。记得那天骄阳似火，但丝毫没有影响我激动的心情。"
+"1980年的盛夏，我怀着憧憬来到这座城市。那时我刚从大学毕业，年轻气盛，���未来充满期待。记得那天骄阳似火，但丝毫没有影响我激动的心情。"
 
 请开始转换工作。"""
 
@@ -167,7 +302,7 @@ class Chat2Story:
             
             messages = [
                 {"role": "system", "content": self.system_prompt},
-                {"role": "user", "content": f"请将以下访谈内容转换为优美的第一人称叙事文��：\n\n{segment}"}
+                {"role": "user", "content": f"请将以下访谈内容转换为优美的第一人称叙事文：\n\n{segment}"}
             ]
             
             response = self.client.chat.completions.create(
