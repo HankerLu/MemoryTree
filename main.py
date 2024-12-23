@@ -29,7 +29,9 @@ class MemoryTreeApp:
         self.setup_connections()
         
     def check_signal(self):
+
         """定期检查否收到退出信号"""
+
         try:
             # 尝试处理待处理的事件
             QApplication.processEvents()
@@ -53,6 +55,7 @@ class MemoryTreeApp:
             response = self.conversation_agent.chat(user_input)
             self.window.chat_history.append(f"助手: {response}")
         
+
         # 清空所有内容
         def on_clear_all():
             self.window.clear_all()
@@ -60,6 +63,7 @@ class MemoryTreeApp:
         # 持久化信息
         def on_persist_info():
             self.window.persist_info()
+
         
         # 生成叙事体
         def on_generate_narrative():
@@ -106,6 +110,7 @@ class MemoryTreeApp:
         self.window.send_message = on_send_message
         self.window.clear_all = on_clear_all
         self.window.persist_info = on_persist_info
+
         self.window.generate_narrative = on_generate_narrative
         self.window.analyze_sentences = on_analyze_sentences
         self.window.save_narrative = on_save_narrative

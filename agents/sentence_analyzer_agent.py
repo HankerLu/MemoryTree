@@ -16,8 +16,9 @@ class SentenceAnalyzerAgent:
 1. 事实描述 - 描述发生的事件和行为
 2. 情感表达 - 表达情绪和感受的段落
 3. 对话内容 - 包含对话或交谈的段落
-4. 环境描述 - 描述场景、环境或氛围
+4. 环境描述 - 描述场景、环境或氛围  
 5. 思考感悟 - 包含个人思考、反思或感悟
+
 
 文本：
 {narrative_text}
@@ -38,7 +39,7 @@ class SentenceAnalyzerAgent:
                 
         except Exception as e:
             return f"发生错误：{str(e)}"
-    
+
     def get_paragraphs(self, analysis_result):
         """从分析结果中提取段落和分类"""
         paragraphs = []
@@ -57,3 +58,4 @@ class SentenceAnalyzerAgent:
                 current_paragraph = {}
                 
         return paragraphs
+

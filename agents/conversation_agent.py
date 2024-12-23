@@ -23,12 +23,12 @@ class ConversationAgent:
         """创建新的日志文件"""
         os.makedirs('logs', exist_ok=True)
         self.log_file = f"logs/conversation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-        
+
     def init_conversation_history(self):
         """初始化对话历史"""
         prompt_template = """你是一位专业的回忆录采访者。你的任务是通过对话的方式，引导用户回忆和分享他们人生中的重要经历、情感和故事。
 
-请���循以下原则：
+请遵循以下原则：
 1. 以温和友善的态度与用户交谈，营造轻松舒适的氛围
 2. 循序渐进地引导用户展开回忆，从简单的话题逐渐深入
 3. 针对用户提到的关键事件、人物或情感进行追问，获取更丰富的细节
@@ -71,6 +71,7 @@ class ConversationAgent:
     
     def get_conversation_history(self):
         """获取当前会话的对话历史"""
+
         return self.conversation_history
     
     def clear_history(self):
@@ -81,3 +82,4 @@ class ConversationAgent:
         self.init_conversation_history()
         # 保存清空后的历史到新文件
         self.save_history()
+
