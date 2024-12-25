@@ -49,6 +49,45 @@ class ConversationAgent:
         except Exception as e:
             print(f"保存对话历史时发生错误：{str(e)}")
 
+    def set_conversation_history(self, history):
+        """设置当前对话历史
+        
+        Args:
+            history (list): 要设置的对话历史列表，每个元素应该是包含 role 和 content 的字典
+            
+        Returns:
+            bool: 设置是否成功
+            
+        Raises:
+            ValueError: 当输入的历史记录格式不正确时抛出
+        """
+        try:
+            # 验证输入格式
+            if not isinstance(history, list):
+                raise ValueError("对话历史必须是列表格式")
+                
+            for message in history:
+                if not isinstance(message, dict):
+                    raise ValueError("对话历史中的每条消息必须是字典格式")
+                if 'role' not in message or 'content' not in message:
+                    raise ValueError("每条消息必须包含 'role' 和 'content' 字段")
+                if message['role'] not in ['system', 'user', 'assistant']:
+                    raise ValueError("消息角色必须是 'system'、'user' 或 'assistant'")
+            
+            # 设置新的对话历史
+            self.conversation_history = history
+            
+            # 保存到新的日志文件
+            self.create_new_log_file()
+            self.save_history()
+            
+            return True
+            
+        except Exception as e:
+            print(f"设置对话历史时发生错误：{str(e)}")
+            return False
+
+
     def chat(self, user_input):
         """与用户进行对话"""
         self.conversation_history.append({"role": "user", "content": user_input})
