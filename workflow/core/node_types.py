@@ -69,7 +69,7 @@ class AnalysisNode(Node):
         # 1. 段落分析
         sentence_raw_result = self.sentence_agent.analyze_narrative(content)
 
-        parse_sentence_raw_result = self.tag_agent.parse_tags(sentence_raw_result)
+        parse_sentence_raw_result = self.sentence_agent.get_paragraphs(sentence_raw_result)
 
         
         # 2. 标签分析
@@ -112,14 +112,16 @@ class SVGNode(Node):
     async def _process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """生成SVG卡片"""
         # 从上一个节点的processed_output中获取输入
-        content = input_data.get("processed_output", {}).get("content", "")
-        paragraphs = input_data.get("processed_output", {}).get("paragraphs", [])
+        # content = input_data.get("processed_output", {}).get("content", "")
+        # paragraphs = input_data.get("processed_output", {}).get("paragraphs", [])
+        content = None
         
         # 生成SVG
         raw_result = self.service.generate_svg(
             number="Chapter 1",
             title="回忆录",
-            content=content
+            content=content,
+            is_chapter=True
         )
         
         return {
