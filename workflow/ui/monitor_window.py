@@ -8,7 +8,11 @@ from .input_dialog import InputDialog
 from workflow.core.workflow_manager import WorkflowManager
 from workflow.core.node_types import (ConversationNode, NarrativeNode, 
                                     AnalysisNode, SVGNode)
+from workflow.core.workflow_thread import WorkflowThread
 import asyncio
+import logging
+
+logger = logging.getLogger(__name__)
 
 class MonitorWindow(QMainWindow):
     """工作流监控主窗口"""
@@ -17,13 +21,15 @@ class MonitorWindow(QMainWindow):
         super().__init__(parent)
         self.workflow_manager = WorkflowManager()
         self.initial_input = initial_input
+        self.user_selected_node = None  # 用户手动选择的节点
         self._setup_workflow()
         self._setup_ui()
         self._setup_connections()
         
         # 如果有初始输入，自动开始执行
         if self.initial_input:
-            QTimer.singleShot(0, self._auto_start)
+            # 延迟启动以确保界面完全初始化
+            QTimer.singleShot(1000, self._auto_start)
         
     def _setup_workflow(self):
         """初始化工作流程"""
@@ -97,11 +103,13 @@ class MonitorWindow(QMainWindow):
         self.workflow_view.start_button.clicked.connect(self._on_start_clicked)
         
         # 重置按钮
-        self.workflow_view.reset_button.clicked.connect(self._on_reset_clicked)
+        self.workflow_view.reset_clicked.connect(self._on_reset_clicked)
         
     @pyqtSlot(str)
     def _on_node_selected(self, node_id: str):
         """处理节点选择事件"""
+        logger.info(f"用户选择节点: {node_id}")
+        self.user_selected_node = node_id  # 记录用户选择
         node = self.workflow_manager.get_node(node_id)
         if node:
             self.detail_view.update_node_info(node.to_dict())
@@ -110,6 +118,7 @@ class MonitorWindow(QMainWindow):
     def _on_start_clicked(self, skip_input=False):
         """处理开始按钮点击事件"""
         try:
+            logger.info("开始执行工作流按钮被点击")
             if not skip_input:
                 # 获取用户输入
                 dialog = InputDialog(self)
@@ -132,33 +141,28 @@ class MonitorWindow(QMainWindow):
 
             # 禁用开始按钮
             self.workflow_view.start_button.setEnabled(False)
+
+            # 创建并启动工作流线程
+            self.workflow_thread = WorkflowThread(self.workflow_manager, initial_input)
+            # 确保在主线程中连接信号
+            self.workflow_thread.status_updated.connect(
+                self._on_workflow_status_update, 
+                type=Qt.QueuedConnection
+            )
+            self.workflow_thread.workflow_completed.connect(
+                self._on_workflow_completed,
+                type=Qt.QueuedConnection
+            )
+            self.workflow_thread.workflow_error.connect(
+                self._on_workflow_error,
+                type=Qt.QueuedConnection
+            )
             
-            # 获取当前运行的事件循环
-            loop = asyncio.get_event_loop()
-            
-            # 使用asyncio.create_task创建异步任务
-            future = asyncio.ensure_future(self.workflow_manager.execute_workflow(initial_input))
-            
-            # 使用QTimer定期检查任务状态
-            def check_future():
-                if future.done():
-                    timer.stop()
-                    self.workflow_view.start_button.setEnabled(True)
-                    try:
-                        future.result()  # 获取结果，如果有错误会抛出
-                    except Exception as e:
-                        QMessageBox.critical(
-                            self,
-                            "执行错误",
-                            f"工作流执行过程中发生错误：\n{str(e)}"
-                        )
-            
-            timer = QTimer()
-            timer.timeout.connect(check_future)
-            timer.start(50)  # 每50ms检查一次
+            logger.info("准备执行工作流")
+            self.workflow_thread.start()
             
         except Exception as e:
-            # 处理错误
+            logger.error(f"启动工作流失败: {str(e)}")
             QMessageBox.critical(
                 self,
                 "执行错误",
@@ -168,21 +172,90 @@ class MonitorWindow(QMainWindow):
     @pyqtSlot()
     def _on_reset_clicked(self):
         """处理重置按钮点击事件"""
-        self.workflow_manager.reset_workflow()
-        self.detail_view.clear()
-        self._on_workflow_status_update(self.workflow_manager.get_workflow_status())
+        try:
+            # 重置工作流管理器
+            self.workflow_manager.reset_workflow()
+            
+            # 清空节点详情视图
+            self.detail_view.clear()
+            
+            # 清除用户选择的节点
+            self.user_selected_node = None
+            
+            # 更新工作流状态显示
+            self._on_workflow_status_update(self.workflow_manager.get_workflow_status())
+            
+            # 重新启用开始按钮
+            self.workflow_view.start_button.setEnabled(True)
+            
+            # 如果是从API启动的，清除初始输入
+            self.initial_input = None
+            
+        except Exception as e:
+            QMessageBox.critical(
+                self,
+                "重置错误",
+                f"重置工作流时发生错误：\n{str(e)}"
+            )
         
     def _on_workflow_status_update(self, status: Dict[str, Any]):
         """处理工作流状态更新"""
+        logger.info(f"收到工作流状态更新: {status}")
         self.workflow_view.update_workflow_status(status)
         
-        # 如果有当前选中的节点，更新其详情
+        # 获取当前执行的节点
         current_node = status.get("current_node")
-        if current_node:
+        previous_node = status.get("previous_node")
+        logger.info(f"当前执行节点: {current_node}, 前一个节点: {previous_node}")
+        
+        # 总是显示当前执行的节点，除非用户手动选择了其他节点
+        if current_node and not self.user_selected_node:
+            logger.info(f"更新详情视图为当前执行节点: {current_node}")
             node_data = status["nodes"].get(current_node)
             if node_data:
-                self.detail_view.update_node_info(node_data) 
+                logger.info(f"节点数据: {node_data}")
+                self.detail_view.update_node_info(node_data)
+                # 强制更新界面
+                self.detail_view.repaint()
+        # 如果有用户选择的节点，显示用户选择的节点
+        elif self.user_selected_node:
+            logger.info(f"显示用户选择的节点: {self.user_selected_node}")
+            node_data = status["nodes"].get(self.user_selected_node)
+            if node_data:
+                logger.info(f"节点数据: {node_data}")
+                self.detail_view.update_node_info(node_data)
+                # 强制更新界面
+                self.detail_view.repaint()
+        # 如果没有当前节点也没有用户选择的节点，显示第一个节点
+        elif not self.user_selected_node:
+            first_node = self.workflow_manager.node_sequence[0]
+            node_data = status["nodes"].get(first_node)
+            if node_data:
+                logger.info(f"显示第一个节点: {first_node}")
+                self.detail_view.update_node_info(node_data)
+                self.detail_view.repaint()
         
+    @pyqtSlot(dict)
+    def _on_workflow_completed(self, result: Dict[str, Any]):
+        """处理工作流完成"""
+        logger.info("工作流执行完成")
+        self.workflow_view.start_button.setEnabled(True)
+        QMessageBox.information(self, "完成", "工作流执行完成")
+        
+    @pyqtSlot(str)
+    def _on_workflow_error(self, error_msg: str):
+        """处理工作流错误"""
+        logger.error(f"工作流执行失败: {error_msg}")
+        self.workflow_view.start_button.setEnabled(True)
+        QMessageBox.critical(self, "错误", f"工作流执行失败:\n{error_msg}")
+        
+    @pyqtSlot()
     def _auto_start(self):
         """自动开始执行工作流"""
-        self._on_start_clicked(skip_input=True) 
+        try:
+            logger.info("开始自动执行工作流")
+            logger.info(f"初始输入: {self.initial_input}")
+            self._on_start_clicked(skip_input=True)
+        except Exception as e:
+            logger.error(f"自动执行失败: {str(e)}")
+            QMessageBox.critical(self, "错误", f"自动执行失败: {str(e)}") 

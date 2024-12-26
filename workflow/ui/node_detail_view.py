@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
-                           QTextEdit, QTabWidget, QScrollArea)
+from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QLabel, QTextEdit, 
+                           QScrollArea, QFrame)
 from PyQt5.QtCore import Qt
 from typing import Dict, Any
 import json
@@ -13,63 +13,73 @@ class NodeDetailView(QWidget):
         
     def _setup_ui(self):
         """设置UI布局"""
-        layout = QVBoxLayout(self)
+        # 创建滚动区域
+        scroll = QScrollArea(self)
+        scroll.setWidgetResizable(True)
         
-        # 创建选项卡
-        self.tab_widget = QTabWidget()
+        # 创建主容器
+        container = QWidget()
+        layout = QVBoxLayout(container)
         
-        # 基本信息选项卡
-        self.basic_info_tab = QWidget()
-        basic_layout = QVBoxLayout(self.basic_info_tab)
+        # 基本信息区域
+        basic_info = QFrame()
+        basic_info.setFrameStyle(QFrame.Panel | QFrame.Raised)
+        basic_layout = QVBoxLayout(basic_info)
         
-        # 节点ID和名称
         self.id_label = QLabel("节点ID: ")
         self.name_label = QLabel("节点名称: ")
-        basic_layout.addWidget(self.id_label)
-        basic_layout.addWidget(self.name_label)
-        
-        # 状态和时间信息
         self.status_label = QLabel("状态: ")
         self.time_label = QLabel("执行时间: ")
+        
+        basic_layout.addWidget(self.id_label)
+        basic_layout.addWidget(self.name_label)
         basic_layout.addWidget(self.status_label)
         basic_layout.addWidget(self.time_label)
+        layout.addWidget(basic_info)
         
-        # 输入数据选项卡
-        self.input_tab = QWidget()
-        input_layout = QVBoxLayout(self.input_tab)
-        self.input_text = QTextEdit()
-        self.input_text.setReadOnly(True)
-        input_layout.addWidget(self.input_text)
+        # 输入数据区域
+        input_group = self._create_group("输入数据")
+        self.input_text = input_group["text"]
+        layout.addWidget(input_group["frame"])
         
-        # 原始输出选项卡
-        self.raw_output_tab = QWidget()
-        raw_output_layout = QVBoxLayout(self.raw_output_tab)
-        self.raw_output_text = QTextEdit()
-        self.raw_output_text.setReadOnly(True)
-        raw_output_layout.addWidget(self.raw_output_text)
+        # 原始输出区域
+        raw_output_group = self._create_group("原始输出")
+        self.raw_output_text = raw_output_group["text"]
+        layout.addWidget(raw_output_group["frame"])
         
-        # 处理后输出选项卡
-        self.processed_output_tab = QWidget()
-        processed_output_layout = QVBoxLayout(self.processed_output_tab)
-        self.processed_output_text = QTextEdit()
-        self.processed_output_text.setReadOnly(True)
-        processed_output_layout.addWidget(self.processed_output_text)
+        # 处理后输出区域
+        processed_output_group = self._create_group("处理后输出")
+        self.processed_output_text = processed_output_group["text"]
+        layout.addWidget(processed_output_group["frame"])
         
-        # 错误信息选项卡
-        self.error_tab = QWidget()
-        error_layout = QVBoxLayout(self.error_tab)
-        self.error_text = QTextEdit()
-        self.error_text.setReadOnly(True)
-        error_layout.addWidget(self.error_text)
+        # 错误信息区域
+        error_group = self._create_group("错误信息")
+        self.error_text = error_group["text"]
+        layout.addWidget(error_group["frame"])
         
-        # 添加所有选项卡
-        self.tab_widget.addTab(self.basic_info_tab, "基本信息")
-        self.tab_widget.addTab(self.input_tab, "输入数据")
-        self.tab_widget.addTab(self.raw_output_tab, "原始输出")
-        self.tab_widget.addTab(self.processed_output_tab, "处理后输出")
-        self.tab_widget.addTab(self.error_tab, "错误信息")
+        # 设置滚动区域的部件
+        scroll.setWidget(container)
         
-        layout.addWidget(self.tab_widget)
+        # 设置主布局
+        main_layout = QVBoxLayout(self)
+        main_layout.addWidget(scroll)
+        
+    def _create_group(self, title: str) -> Dict[str, Any]:
+        """创建分组框"""
+        frame = QFrame()
+        frame.setFrameStyle(QFrame.Panel | QFrame.Raised)
+        layout = QVBoxLayout(frame)
+        
+        label = QLabel(title)
+        label.setStyleSheet("font-weight: bold;")
+        layout.addWidget(label)
+        
+        text = QTextEdit()
+        text.setReadOnly(True)
+        text.setMinimumHeight(100)
+        layout.addWidget(text)
+        
+        return {"frame": frame, "text": text}
         
     def _format_json(self, data: Any) -> str:
         """格式化JSON数据"""
@@ -108,10 +118,6 @@ class NodeDetailView(QWidget):
         error_info = node_data.get('error_info', '')
         self.error_text.setText(error_info if error_info else "无错误")
         
-        # 如果有错误，自动切换到错误选项卡
-        if error_info:
-            self.tab_widget.setCurrentWidget(self.error_tab)
-    
     def clear(self):
         """清空所有显示"""
         self.id_label.setText("节点ID: ")

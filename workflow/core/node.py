@@ -2,6 +2,9 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 from enum import Enum
 import asyncio
+import logging
+
+logger = logging.getLogger(__name__)
 
 class NodeStatus(Enum):
     WAITING = "waiting"
@@ -27,31 +30,33 @@ class Node:
         self._process_func = func
 
     async def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """处理节点任务"""
+        """处理节点"""
         try:
+            logger.info(f"开始处理节点 {self.node_id}")
+            logger.info(f"输入数据: {input_data}")
+            
+            # 更新状态为运行中
             self.status = NodeStatus.RUNNING
             self.start_time = datetime.now()
-            self.input_data = input_data
-
-            if self._process_func:
-                # 确保处理函数是异步的
-                if asyncio.iscoroutinefunction(self._process_func):
-                    self.output_data = await self._process_func(input_data)
-                else:
-                    self.output_data = self._process_func(input_data)
-
-                self.status = NodeStatus.COMPLETED
-            else:
-                raise ValueError(f"节点 {self.node_id} 未设置处理函数")
-
+            self.input_data = input_data  # 保存输入数据
+            
+            # 执行处理函数
+            result = await self._process_func(input_data)
+            
+            # 更新状态为完成
+            self.status = NodeStatus.COMPLETED
+            self.end_time = datetime.now()
+            self.output_data = result  # 保存输出数据
+            
+            logger.info(f"节点 {self.node_id} 处理完成")
+            return result
+            
         except Exception as e:
+            logger.error(f"节点 {self.node_id} 处理失败: {str(e)}")
             self.status = NodeStatus.ERROR
             self.error_info = str(e)
+            self.output_data = {}  # 错误时清空输出数据
             raise
-        finally:
-            self.end_time = datetime.now()
-
-        return self.output_data
 
     def reset(self):
         """重置节点状态"""

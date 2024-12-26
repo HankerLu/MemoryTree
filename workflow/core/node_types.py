@@ -5,6 +5,9 @@ from agents.narrative_agent import NarrativeAgent
 from agents.sentence_analyzer_agent import SentenceAnalyzerAgent
 from agents.tag_analyzer_agent import TagAnalyzerAgent
 from services.book_svg_service import BookSVGService
+import logging
+
+logger = logging.getLogger(__name__)
 
 class ConversationNode(Node):
     """对话节点"""
@@ -15,23 +18,35 @@ class ConversationNode(Node):
 
     async def _process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """处理对话输入"""
+        logger.info(f"ConversationNode 接收到输入: {input_data}")
         # 获取对话历史，确保是列表格式
         conversation_history = input_data.get("conversation_history", [])
+        logger.info(f"ConversationNode 提取的对话历史: {conversation_history}")
+        
         if isinstance(conversation_history, str):
             try:
-                # 尝试将字符串解析为列表
                 import json
                 conversation_history = json.loads(conversation_history)
+                logger.info("ConversationNode 解析字符串为JSON")
             except:
+                logger.error("ConversationNode JSON解析失败")
                 raise ValueError("对话历史必须是有效的JSON格式列表")
 
         self.agent.set_conversation_history(conversation_history)
-
-
-        return {
-            "raw_output": input_data.get("conversation_history", []),  # 原始输出
-            "processed_output": conversation_history,  # 加工后的输出（用于下一个节点）
+        
+        # 准备下一个节点需要的输入
+        next_input = {
+            "conversation": conversation_history
         }
+        logger.info(f"ConversationNode 准备的下一个节点输入: {next_input}")
+
+        result = {
+            "raw_output": input_data.get("conversation_history", []),
+            "processed_output": next_input.get("conversation", []),
+            "conversation_history": conversation_history
+        }
+        logger.info(f"ConversationNode 返回结果: {result}")
+        return result
 
 class NarrativeNode(Node):
     """叙事体生成节点"""
@@ -42,16 +57,29 @@ class NarrativeNode(Node):
 
     async def _process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """生成叙事体"""
+        logger.info(f"NarrativeNode 接收到输入: {input_data}")
         # 从上一个节点的processed_output中获取输入
         conversation = input_data.get("processed_output", {})
+        logger.info(f"NarrativeNode 提取的对话数据: {conversation}")
         
         # 使用叙事代理处理
+        logger.info(f"NarrativeNode 开始生成叙事体，输入类型: {type(conversation)}")
         raw_result = self.agent.generate_narrative(conversation)
-
-        return {
-            "raw_output": raw_result,  # 原始输出
-            "processed_output": raw_result, # 加工后的输出
+        logger.info(f"NarrativeNode 生成的叙事体: {raw_result}")
+        
+        # 准备下一个节点需要的输入
+        next_input = {
+            "content": raw_result
         }
+        logger.info(f"NarrativeNode 准备的下一个节点输入: {next_input}")
+
+        result = {
+            "raw_output": raw_result,
+            "processed_output": next_input.get("content", ""),
+            "narrative_metadata": raw_result
+        }
+        logger.info(f"NarrativeNode 返回结果: {result}")
+        return result
 
 class AnalysisNode(Node):
     """综合分析节点"""
@@ -87,8 +115,7 @@ class AnalysisNode(Node):
                 })
 
             if not merged_results:
-                raise ValueError("合并为空")
-
+                return {}
 
             return {
                 "raw_output": {
@@ -100,7 +127,7 @@ class AnalysisNode(Node):
             }
         except Exception as e:
             raise ValueError(f"合并分析结果时发生错误：{str(e)}")
-
+            return {}
 
 class SVGNode(Node):
     """SVG卡片生成节点"""
@@ -112,6 +139,7 @@ class SVGNode(Node):
     async def _process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """生成SVG卡片"""
         # 从上一个节点的processed_output中获取输入
+        # 这里需要改
         # content = input_data.get("processed_output", {}).get("content", "")
         # paragraphs = input_data.get("processed_output", {}).get("paragraphs", [])
         content = None
@@ -128,6 +156,5 @@ class SVGNode(Node):
             "raw_output": raw_result,  # 原始SVG输出
             "processed_output": {
                 "svg_content": raw_result
-            },
-            "svg_content": raw_result  # 保存SVG内容
-        } 
+            }
+        }
