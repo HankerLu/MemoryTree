@@ -17,7 +17,7 @@ from services.tag_service import TagService
 from entities.narrative import Narrative
 from entities.paragraph import Paragraph
 from entities.tag import Tag
-
+from utils.monitor_pool import monitor_pool  # 添加导入
 logger = logging.getLogger(__name__)
 
 
@@ -88,6 +88,16 @@ class NarrativeNode(BaseNode):
                 }
             }
 
+            # 添加监控点：工作单元叙述体结果
+            await monitor_pool.record(
+                category="workflows",
+                key="results_narrative",
+                value={
+                    "work_unit_id": work_unit["id"],
+                    "content": narrative_text
+                }
+            )
+
             return work_unit
 
         except Exception as e:
@@ -136,6 +146,16 @@ class SVGNode(BaseNode):
                     "source_narrative": len(narrative["content"])
                 }
             }
+
+            # 添加监控点：工作单元svg结果
+            await monitor_pool.record(
+                category="workflows",
+                key="results_svg",
+                value={
+                    "work_unit_id": work_unit["id"],
+                    "content": svg_content
+                }
+            )
 
             return work_unit
 
@@ -240,6 +260,21 @@ class AnalysisNode(BaseNode):
                 except Exception as e:
                     db.rollback()  # 回滚事务
                     raise
+
+            # 更新工作单元结果
+            work_unit["results"]["analyse"] = {
+                "content": merged_results,
+            }
+            # 添加监控点：工作单元分析任务结果
+            await monitor_pool.record(
+                category="workflows",
+                key="results_analyse",
+                value={
+                    "work_unit_id": work_unit["id"],
+                    "content": merged_results
+                }
+            )
+
 
 
         except Exception as e:

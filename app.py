@@ -13,6 +13,7 @@ from models.api_models import (
 )
 from workflow.service import WorkflowService
 from services.chat_service import ChatService
+from utils.monitor_pool import monitor_pool
 
 app = FastAPI(
     title="MemoryTree API",
@@ -78,14 +79,14 @@ async def get_workflow_status(unit_id: str) -> WorkflowStatus:
     try:
         logger.info(f"接收状态查询请求: {unit_id}")
         status = await workflow_service.get_workflow_status(unit_id)
-        
+
         if not status:
             logger.error(f"工作单元不存在或状态获取失败: {unit_id}")
             raise HTTPException(
                 status_code=404,
                 detail=f"工作单元不存在或状态获取失败: {unit_id}"
             )
-            
+
         # 验证状态数据
         try:
             workflow_status = WorkflowStatus(**status)
@@ -97,7 +98,7 @@ async def get_workflow_status(unit_id: str) -> WorkflowStatus:
                 status_code=500,
                 detail=f"状态数据格式错误: {str(e)}"
             )
-            
+
     except HTTPException:
         raise
     except Exception as e:
@@ -142,3 +143,41 @@ async def global_exception_handler(request, exc):
         "error": str(exc),
         "detail": "服务器内部错误"
     }
+
+
+@app.get("/monitor/all")
+async def get_all_monitor_data():
+    """获取所有监控数据"""
+    try:
+        data = await monitor_pool.get_data()
+        return data
+    except Exception as e:
+        logger.error(f"获取监控数据失败: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/monitor/{category}")
+async def get_category_monitor(category: str):
+    """获取特定类别的监控数据"""
+    try:
+        data = await monitor_pool.get_data(category=category)
+        if not data:
+            raise HTTPException(status_code=404, detail=f"未找到类别: {category}")
+        return data
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"获取监控数据失败: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.on_event("startup")
+async def startup_event():
+    """程序启动时的初始化"""
+    try:
+        # 初始化监控池
+        await monitor_pool.initialize()
+        logger.info("应用启动完成")
+    except Exception as e:
+        logger.error(f"应用启动失败: {str(e)}")
+        raise

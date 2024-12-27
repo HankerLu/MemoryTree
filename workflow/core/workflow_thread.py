@@ -2,6 +2,7 @@ from typing import Dict, Any
 import asyncio
 import logging
 from datetime import datetime
+from utils.monitor_pool import monitor_pool  # 添加导入
 from .node_types import (
     ConversationNode,
     NarrativeNode,
@@ -29,13 +30,32 @@ class WorkflowThread:
                 
             unit_id = work_unit["id"]
             logger.info(f"开始处理工作单元: {unit_id}")
-            
+
+            # 添加监控点：工作单元工作流状态
+            await monitor_pool.record(
+                category="system",
+                key=unit_id+"_workflow_status",
+                value={
+                    "content": f"开始处理工作单元: {unit_id}"
+                }
+            )
+
             # 确保结果字典存在
             if "results" not in work_unit:
                 work_unit["results"] = {}
             
             # 叙事生成阶段
             logger.info(f"开始生成叙事: {unit_id}")
+
+            # 添加监控点：工作单元工作流状态
+            await monitor_pool.record(
+                category="system",
+                key=unit_id + "_workflow_status",
+                value={
+                    "content": f"开始生成叙事: {unit_id}"
+                }
+            )
+
             work_unit["status"] = "generating_narrative"
             work_unit["node_states"]["narrative"] = {
                 "status": "processing",
@@ -52,6 +72,16 @@ class WorkflowThread:
             work_unit["node_states"]["narrative"]["status"] = "completed"
             work_unit["node_states"]["narrative"]["end_time"] = datetime.now().isoformat()
             logger.info(f"叙事生成完成: {unit_id}")
+
+            # 添加监控点：工作单元工作流状态
+            await monitor_pool.record(
+                category="system",
+                key=unit_id + "_workflow_status",
+                value={
+                    "content": f"叙事生成完成: {unit_id}"
+                }
+            )
+
             if status_callback:
                 await status_callback(unit_id, {
                     "node_states": work_unit["node_states"]
@@ -59,6 +89,19 @@ class WorkflowThread:
             
             # SVG生成阶段
             logger.info(f"开始生成SVG: {unit_id}")
+
+            # 开始分析叙述体
+            logger.info(f"开始分析叙述体: {unit_id}")
+
+            # 添加监控点：工作单元工作流状态
+            await monitor_pool.record(
+                category="system",
+                key=unit_id + "_workflow_status",
+                value={
+                    "content": f"开始生成SVG和分析叙述体: {unit_id}"
+                }
+            )
+
             work_unit["status"] = "generating_svg"
             work_unit["node_states"]["svg"] = {
                 "status": "processing",
@@ -83,6 +126,17 @@ class WorkflowThread:
                     work_unit["node_states"]["svg"]["status"] = "completed"
                     work_unit["node_states"]["svg"]["end_time"] = datetime.now().isoformat()
                     logger.info(f"SVG生成完成: {unit_id}")
+
+                    # 添加监控点：工作单元工作流状态
+                    await monitor_pool.record(
+                        category="system",
+                        key=unit_id + "_workflow_status",
+                        value={
+                            "content": f"SVG生成完成: {unit_id}"
+                        }
+                    )
+
+
                     if status_callback:
                         await status_callback(unit_id, {
                             "status": work_unit["status"],
@@ -90,6 +144,17 @@ class WorkflowThread:
                         })
                 else:
                     logger.error(f"SVG生成失败: {unit_id}")
+
+                    # 添加监控点：工作单元工作流状态
+                    await monitor_pool.record(
+                        category="system",
+                        key=unit_id + "_workflow_status",
+                        value={
+                            "content": f"SVG生成失败: {unit_id}"
+                        }
+                    )
+
+
                     work_unit["status"] = "svg_failed"
                     work_unit["node_states"]["svg"]["status"] = "failed"
                     work_unit["node_states"]["svg"]["end_time"] = datetime.now().isoformat()
@@ -101,6 +166,17 @@ class WorkflowThread:
                     
             except Exception as e:
                 logger.error(f"SVG生成异常: {str(e)}")
+
+                # 添加监控点：工作单元工作流状态
+                await monitor_pool.record(
+                    category="system",
+                    key=unit_id + "_workflow_status",
+                    value={
+                        "content": f"SVG生成异常: {str(e)}"
+                    }
+                )
+
+
                 work_unit["status"] = "svg_failed"
                 work_unit["node_states"]["svg"]["status"] = "failed"
                 work_unit["node_states"]["svg"]["error"] = str(e)
@@ -118,6 +194,17 @@ class WorkflowThread:
             
         except Exception as e:
             logger.error(f"工作流处理失败: {str(e)}")
+
+            # 添加监控点：工作单元工作流状态
+            await monitor_pool.record(
+                category="system",
+                key=work_unit['id'] + "_workflow_status",
+                value={
+                    "content": f"工作流{work_unit['id']}处理失败: {str(e)}"
+                }
+            )
+
+
             if status_callback:
                 await status_callback(unit_id, {
                     "status": "failed",
@@ -132,7 +219,27 @@ class WorkflowThread:
             work_unit["results"]["analysis"] = analysis_result
             work_unit["status"] = "completed"
             logger.info(f"分析任务完成: {work_unit['id']}")
+
+            # 添加监控点：工作单元工作流状态
+            await monitor_pool.record(
+                category="system",
+                key=work_unit['id'] + "_workflow_status",
+                value={
+                    "content": f"分析任务完成，工作流执行完成: {work_unit['id']}"
+                }
+            )
+
         except Exception as e:
             logger.error(f"分析任务失败: {str(e)}")
+
+            # 添加监控点：工作单元工作流状态
+            await monitor_pool.record(
+                category="system",
+                key=work_unit['id'] + "_workflow_status",
+                value={
+                    f"分析任务失败: {str(e)}"
+                }
+            )
+
             work_unit["status"] = "analysis_failed"
             work_unit["error"] = str(e)

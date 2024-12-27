@@ -4,6 +4,7 @@ from datetime import datetime
 from app import logger
 from workflow.core.workflow_manager import WorkflowManager
 from agents.conversation_agent import ConversationAgent
+from utils.monitor_pool import monitor_pool  # 添加导入
 
 
 class ChatService:
@@ -33,6 +34,14 @@ class ChatService:
             })
             self.message_count += 1
 
+            # 添加监控点：引导问题辅助资料
+            await monitor_pool.record(
+                category="chat",
+                key="process_user_input",
+                value="RAG"
+            )
+
+
             # 生成AI响应
             response = self.conversation_agent.chat(user_input)
             self.chat_history.append({
@@ -53,6 +62,21 @@ class ChatService:
                 result["unit_id"] = unit_id
                 # 重置计数
                 self.message_count = 0
+
+            # 添加监控点：更新系统的对话历史
+            await monitor_pool.record(
+                category="chat",
+                key="system_history",
+                value=self.conversation_agent.get_conversation_history()
+            )
+
+            # 添加监控点：记录最近的对话历史
+            await monitor_pool.record(
+                category="chat",
+                key="recent_history",
+                value=self.chat_history[-5:] if len(self.chat_history) > 0 else []
+            )
+
 
             return result
 
