@@ -94,7 +94,7 @@ class ConversationAgent:
         
         try:
             response = self.client.chat.completions.create(
-                model="glm-4",
+                model="glm-4-air",
                 messages=self.conversation_history,
                 temperature=0.7,
             )

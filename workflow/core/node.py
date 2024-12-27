@@ -1,81 +1,70 @@
+from typing import Dict, Any
 from datetime import datetime
-from typing import Dict, Any, Optional
 from enum import Enum
-import asyncio
-import logging
 
-logger = logging.getLogger(__name__)
 
 class NodeStatus(Enum):
-    WAITING = "waiting"
-    RUNNING = "running"
+    IDLE = "idle"
+    PROCESSING = "processing"
     COMPLETED = "completed"
     ERROR = "error"
 
-class Node:
-    """工作流节点基类"""
-    def __init__(self, node_id: str, node_name: str):
-        self.node_id = node_id
-        self.node_name = node_name
-        self.status = NodeStatus.WAITING
-        self.start_time: Optional[datetime] = None
-        self.end_time: Optional[datetime] = None
-        self.input_data: Dict[str, Any] = {}
-        self.output_data: Dict[str, Any] = {}
-        self.error_info: str = ""
-        self._process_func = None  # 节点的处理函数
 
-    def set_process_func(self, func):
-        """设置节点的处理函数"""
-        self._process_func = func
+class BaseNode:
+    """节点基类，定义了节点的基本接口和状态管理"""
 
-    async def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """处理节点"""
+    def __init__(self, name: str):
+        self.name = name
+        self.status = NodeStatus.IDLE
+
+    async def process(self, work_unit: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        处理工作单元数据
+        Args:
+            work_unit: 工作单元数据
+        Returns:
+            处理后的工作单元数据
+        """
         try:
-            logger.info(f"开始处理节点 {self.node_id}")
-            logger.info(f"输入数据: {input_data}")
-            
-            # 更新状态为运行中
-            self.status = NodeStatus.RUNNING
-            self.start_time = datetime.now()
-            self.input_data = input_data  # 保存输入数据
-            
-            # 执行处理函数
-            result = await self._process_func(input_data)
-            
-            # 更新状态为完成
+            self.status = NodeStatus.PROCESSING
+
+            # 记录节点开始处理
+            work_unit["node_states"][self.name] = {
+                "status": self.status.value,
+                "start_time": datetime.now()
+            }
+
+            # 执行具体处理逻辑，传入整个work_unit
+            result = await self._process(work_unit)
+
+            # 更新处理结果和状态
             self.status = NodeStatus.COMPLETED
-            self.end_time = datetime.now()
-            self.output_data = result  # 保存输出数据
-            
-            logger.info(f"节点 {self.node_id} 处理完成")
-            return result
-            
+            if "results" not in work_unit:
+                work_unit["results"] = {}
+            work_unit["results"][self.name] = result
+            work_unit["node_states"][self.name].update({
+                "status": self.status.value,
+                "end_time": datetime.now()
+            })
+
+            return work_unit
+
         except Exception as e:
-            logger.error(f"节点 {self.node_id} 处理失败: {str(e)}")
             self.status = NodeStatus.ERROR
-            self.error_info = str(e)
-            self.output_data = {}  # 错误时清空输出数据
+            work_unit["node_states"][self.name].update({
+                "status": self.status.value,
+                "error": str(e),
+                "end_time": datetime.now()
+            })
             raise
 
-    def reset(self):
-        """重置节点状态"""
-        self.status = NodeStatus.WAITING
-        self.start_time = None
-        self.end_time = None
-        self.input_data = {}
-        self.output_data = {}
-        self.error_info = ""
+    async def _process(self, work_unit: Dict[str, Any]) -> Dict[str, Any]:
+        """具体节点需要实现的处理逻辑"""
+        raise NotImplementedError
 
-    def to_dict(self) -> Dict[str, Any]:
-        """转换为字典格式"""
+    def get_status(self) -> Dict[str, Any]:
+        """获取节点当前状态"""
         return {
-            "node_id": self.node_id,
-            "node_name": self.node_name,
-            "status": self.status.value,
-            "start_time": self.start_time.isoformat() if self.start_time else None,
-            "end_time": self.end_time.isoformat() if self.end_time else None,
-            "input_data": self.input_data,
-            "output_data": self.output_data,
-            "error_info": self.error_info
-        } 
+            "name": self.name,
+            "status": self.status.value
+        }

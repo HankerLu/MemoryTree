@@ -32,7 +32,7 @@ class NarrativeAgent:
             
             try:
                 response = self.client.chat.completions.create(
-                    model="glm-4",
+                    model="glm-4-air",
                     messages=[{"role": "user", "content": prompt}],
                     temperature=0.7,
                 )

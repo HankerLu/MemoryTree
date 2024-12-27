@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Optional
 from enum import Enum
+from utils import logger
 import re
 
 class ContentType(Enum):
@@ -52,10 +53,18 @@ class BookSVGService:
         :param content: 正文内容（如果是章节页则为None）
         :param is_chapter: 是否是章节页
         """
-        if is_chapter:
-            return self._generate_chapter_svg(number, title)
-        else:
-            return self._generate_section_pages(number, title, content)
+
+        try:
+            if is_chapter:
+                return self._generate_chapter_svg(number, title)
+            else:
+                if not content:
+                    raise ValueError("生成SVG需要内容")
+                return self._generate_section_pages(number, title, content)
+                
+        except Exception as e:
+            logger.error(f"SVG生成错误: {str(e)}")
+            raise
     
     def _generate_chapter_svg(self, chapter_number: str, chapter_title: str) -> List[str]:
         """生成章节页面"""

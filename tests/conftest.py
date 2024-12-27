@@ -3,6 +3,8 @@ from sqlalchemy import create_engine, text, event
 from sqlalchemy.orm import sessionmaker
 from database.base import Base
 from database.config import DB_CONFIG
+from fastapi.testclient import TestClient
+from app import app
 
 # 使用测试数据库
 TEST_DATABASE_URL = (
@@ -64,3 +66,15 @@ def db_session(engine, tables):
     session.close()
     transaction.rollback()
     connection.close() 
+
+@pytest.fixture
+def client():
+    """创建测试客户端"""
+    return TestClient(app)
+
+@pytest.fixture(autouse=True)
+async def setup_teardown():
+    """测试前后的设置和清理"""
+    # 设置
+    yield
+    # 清理 

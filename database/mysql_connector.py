@@ -8,16 +8,17 @@ sys.path.insert(0, project_root)
 
 # 使用绝对导入
 from database.base import Base, engine
+from utils.logger import logger
 
 def init_db():
     """初始化数据库（创建所有表）"""
     try:
         # 测试数据库连接
         with engine.connect() as conn:
-            print("数据库连接成功")
+            logger.info("数据库连接成功")
             result = conn.execute(text("SELECT DATABASE()"))
             current_db = result.scalar()
-            print(f"当前数据库: {current_db}")
+            logger.info(f"当前数据库: {current_db}")
         
         print("正在导入实体类...")
         # 导入并打印每个实体类的信息
@@ -61,7 +62,7 @@ def init_db():
                     print(f"  - {column['name']}: {column['type']}")
         
     except Exception as e:
-        print(f"\n初始化数据库时发生错误: {str(e)}")
+        logger.error(f"初始化数据库时发生错误: {str(e)}")
         import traceback
         print(traceback.format_exc())
         raise

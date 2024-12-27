@@ -14,7 +14,7 @@ DATABASE_URL = (
 # 创建引擎
 engine = create_engine(
     DATABASE_URL,
-    echo=True,
+    echo=False,
     pool_pre_ping=True,
     pool_recycle=3600,
     connect_args={'charset': 'utf8mb4'}
