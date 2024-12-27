@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -36,15 +36,42 @@ class ImportDialogueResponse(BaseModel):
     unit_id: str
 
 
+class NodeState(BaseModel):
+    """节点状态模型"""
+    status: str
+    start_time: Optional[str] = None
+    end_time: Optional[str] = None
+    error: Optional[str] = None
+
+
 class WorkflowStatus(BaseModel):
     """工作流状态模型"""
     id: str
     type: str
     status: str
     create_time: str
-    node_states: dict
+    node_states: Dict[str, NodeState]
     error: Optional[str] = None
     svg_ready: bool
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "id": "123",
+                "type": "realtime",
+                "status": "processing",
+                "create_time": "2024-12-27T10:00:00",
+                "node_states": {
+                    "narrative": {
+                        "status": "completed",
+                        "start_time": "2024-12-27T10:00:01",
+                        "end_time": "2024-12-27T10:00:05"
+                    }
+                },
+                "error": None,
+                "svg_ready": False
+            }
+        }
 
 
 class SVGResult(BaseModel):

@@ -1,10 +1,64 @@
-from sqlalchemy import text, inspect
+from sqlalchemy import create_engine, text, inspect
+from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.pool import QueuePool
+import threading
+import logging
 import os
 import sys
 
 # 添加项目根目录到 Python 路径
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
+
+# 导入配置
+from database.config import DB_CONFIG
+
+logger = logging.getLogger(__name__)
+
+# 创建数据库URL
+DATABASE_URL = (
+    f"mysql+mysqldb://{DB_CONFIG['user']}:{DB_CONFIG['password']}@"
+    f"{DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['database']}"
+    "?charset=utf8mb4"
+)
+
+class DatabaseManager:
+    _instance = None
+    _lock = threading.Lock()
+    _local = threading.local()
+
+    def __new__(cls):
+        with cls._lock:
+            if cls._instance is None:
+                cls._instance = super(DatabaseManager, cls).__new__(cls)
+                cls._instance._init_engine()
+            return cls._instance
+
+    def _init_engine(self):
+        self.engine = create_engine(
+            DATABASE_URL,
+            echo=False,
+            poolclass=QueuePool,
+            pool_size=20,
+            max_overflow=10,
+            pool_timeout=30,
+            pool_recycle=1800
+        )
+        self.session_factory = sessionmaker(bind=self.engine)
+        self.Session = scoped_session(self.session_factory)
+
+    def get_session(self):
+        if not hasattr(self._local, 'session'):
+            self._local.session = self.Session()
+        return self._local.session
+
+    def close_session(self):
+        if hasattr(self._local, 'session'):
+            self._local.session.close()
+            self.Session.remove()
+            delattr(self._local, 'session')
+
+db_manager = DatabaseManager()
 
 # 使用绝对导入
 from database.base import Base, engine

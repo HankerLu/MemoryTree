@@ -72,20 +72,32 @@ async def import_dialogue(request: ImportDialogueRequest) -> ImportDialogueRespo
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/workflow/{unit_id}/status", response_model=WorkflowStatus, name="get_workflow_status")
+@app.get("/workflow/{unit_id}/status", response_model=WorkflowStatus)
 async def get_workflow_status(unit_id: str) -> WorkflowStatus:
-    """
-    获取工作流状态
-    - 查询工作单元状态
-    - 返回处理进度
-    """
-
+    """获取工作流状态"""
     try:
-        logger.info(f"查询工作流状态: {unit_id}")
+        logger.info(f"接收状态查询请求: {unit_id}")
         status = await workflow_service.get_workflow_status(unit_id)
+        
         if not status:
-            raise HTTPException(status_code=404, detail="工作单元不存在")
-        return WorkflowStatus(**status)
+            logger.error(f"工作单元不存在或状态获取失败: {unit_id}")
+            raise HTTPException(
+                status_code=404,
+                detail=f"工作单元不存在或状态获取失败: {unit_id}"
+            )
+            
+        # 验证状态数据
+        try:
+            workflow_status = WorkflowStatus(**status)
+            logger.info(f"返回工作流状态: {workflow_status.status}, ID: {unit_id}")
+            return workflow_status
+        except ValidationError as e:
+            logger.error(f"状态数据验证失败: {str(e)}, 数据: {status}")
+            raise HTTPException(
+                status_code=500,
+                detail=f"状态数据格式错误: {str(e)}"
+            )
+            
     except HTTPException:
         raise
     except Exception as e:
