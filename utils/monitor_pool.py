@@ -34,7 +34,7 @@ class MonitorPool:
         except Exception as e:
             logger.error(f"监控池初始化失败: {str(e)}")
 
-    async def record(self, category: str, key: str, value: Any, unit_id: str = None):
+    async def record(self, category: str, key: str, value: Any, unit_id: str = None, mode: str = "update"):
         """统一的记录接口"""
         try:
             async with self._lock:
@@ -47,10 +47,28 @@ class MonitorPool:
                     # 系统或对话数据
                     target = self._data[category]
 
-                target[key] = {
-                    "value": value,
-                    "timestamp": datetime.now().isoformat()
-                }
+                if mode == "append":
+                    # 追加模式
+                    if key not in target:
+                        target[key] = []
+                    target[key].append({
+                        "value": value,
+                        "timestamp": datetime.now().isoformat()
+                    })
+                elif mode == "merge":
+
+                    # 合并模式（用于node_results）
+
+                    if key not in target:
+                        target[key] = {}
+
+                    target[key].update(value)
+                else:
+                    # 更新模式
+                    target[key] = {
+                        "value": value,
+                        "timestamp": datetime.now().isoformat()
+                    }
                 logger.debug(f"记录监控数据: category={category}, key={key}, unit_id={unit_id}")
         except Exception as e:
             logger.error(f"记录监控数据失败: {str(e)}")

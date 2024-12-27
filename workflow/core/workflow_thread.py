@@ -33,11 +33,16 @@ class WorkflowThread:
 
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(
-                category="system",
-                key=unit_id+"_workflow_status",
+                category="workflows",
+                key="execution_log",
                 value={
-                    "content": f"开始处理工作单元: {unit_id}"
-                }
+                    "node": "workflow",
+                    "event": "start",
+                    "status": "processing",
+                    "message": "开始处理工作流"
+                },
+                unit_id=unit_id,
+                mode="append"
             )
 
             # 确保结果字典存在
@@ -49,11 +54,16 @@ class WorkflowThread:
 
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(
-                category="system",
-                key=unit_id + "_workflow_status",
+                category="workflow",
+                key="execution_log",
                 value={
-                    "content": f"开始生成叙事: {unit_id}"
-                }
+                    "node": "narrative",
+                    "event": "start",
+                    "status": "processing",
+                    "message": "开始生成叙事"
+                },
+                unit_id=unit_id,
+                mode="append"
             )
 
             work_unit["status"] = "generating_narrative"
@@ -75,11 +85,16 @@ class WorkflowThread:
 
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(
-                category="system",
-                key=unit_id + "_workflow_status",
+                category="workflow",
+                key="execution_log",
                 value={
-                    "content": f"叙事生成完成: {unit_id}"
-                }
+                    "node": "narrative",
+                    "event": "complete",
+                    "status": "completed",
+                    "message": "叙事生成完成"
+                },
+                unit_id=unit_id,
+                mode="append"
             )
 
             if status_callback:
@@ -95,11 +110,16 @@ class WorkflowThread:
 
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(
-                category="system",
-                key=unit_id + "_workflow_status",
+                category="workflow",
+                key="execution_log",
                 value={
-                    "content": f"开始生成SVG和分析叙述体: {unit_id}"
-                }
+                    "node": "parallel",
+                    "event": "start",
+                    "status": "processing",
+                    "message": "开始并行处理SVG和分析任务"
+                },
+                unit_id=unit_id,
+                mode="append"
             )
 
             work_unit["status"] = "generating_svg"
@@ -129,11 +149,16 @@ class WorkflowThread:
 
                     # 添加监控点：工作单元工作流状态
                     await monitor_pool.record(
-                        category="system",
-                        key=unit_id + "_workflow_status",
+                        category="workflow",
+                        key="execution_log",
                         value={
-                            "content": f"SVG生成完成: {unit_id}"
-                        }
+                            "node": "svg",
+                            "event": "complete",
+                            "status": "completed",
+                            "message": "SVG生成完成"
+                        },
+                        unit_id=unit_id,
+                        mode="append"
                     )
 
 
@@ -147,11 +172,16 @@ class WorkflowThread:
 
                     # 添加监控点：工作单元工作流状态
                     await monitor_pool.record(
-                        category="system",
-                        key=unit_id + "_workflow_status",
+                        category="workflow",
+                        key="execution_log",
                         value={
-                            "content": f"SVG生成失败: {unit_id}"
-                        }
+                            "node": "svg",
+                            "event": "error",
+                            "status": "failed",
+                            "message": "SVG生成失败：结果无效"
+                        },
+                        unit_id=unit_id,
+                        mode="append"
                     )
 
 
@@ -169,11 +199,16 @@ class WorkflowThread:
 
                 # 添加监控点：工作单元工作流状态
                 await monitor_pool.record(
-                    category="system",
-                    key=unit_id + "_workflow_status",
+                    category="workflow",
+                    key="execution_log",
                     value={
-                        "content": f"SVG生成异常: {str(e)}"
-                    }
+                        "node": "svg",
+                        "event": "error",
+                        "status": "failed",
+                        "message":  f"SVG生成异常: {str(e)}"
+                    },
+                    unit_id=unit_id,
+                    mode="append"
                 )
 
 
@@ -197,16 +232,21 @@ class WorkflowThread:
 
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(
-                category="system",
-                key=work_unit['id'] + "_workflow_status",
+                category="workflow",
+                key="execution_log",
                 value={
-                    "content": f"工作流{work_unit['id']}处理失败: {str(e)}"
-                }
+                    "node": "workflow",
+                    "event": "error",
+                    "status": "failed",
+                    "message": f"工作流处理失败: {str(e)}",
+                },
+                unit_id=work_unit['id'],
+                mode="append"
             )
 
 
             if status_callback:
-                await status_callback(unit_id, {
+                await status_callback(work_unit['id'], {
                     "status": "failed",
                     "error": str(e)
                 })
@@ -222,11 +262,16 @@ class WorkflowThread:
 
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(
-                category="system",
-                key=work_unit['id'] + "_workflow_status",
+                category="workflow",
+                key="execution_log",
                 value={
-                    "content": f"分析任务完成，工作流执行完成: {work_unit['id']}"
-                }
+                    "node": "analysis",
+                    "event": "complete",
+                    "status": "completed",
+                    "message":  "分析任务完成",
+                },
+                unit_id=work_unit['id'],
+                mode="append"
             )
 
         except Exception as e:
@@ -234,11 +279,16 @@ class WorkflowThread:
 
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(
-                category="system",
-                key=work_unit['id'] + "_workflow_status",
+                category="workflow",
+                key="execution_log",
                 value={
-                    f"分析任务失败: {str(e)}"
-                }
+                    "node": "analysis",
+                    "event": "error",
+                    "status": "failed",
+                    "message":  f"分析任务失败: {str(e)}"
+                },
+                unit_id=work_unit['id'],
+                mode="append"
             )
 
             work_unit["status"] = "analysis_failed"

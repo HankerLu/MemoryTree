@@ -17,11 +17,32 @@ class ChatService:
     """
 
     def __init__(self, workflow_manager):
+        self.chat_history = []
+        self.message_count = 1
         self.workflow_manager = workflow_manager
         self.conversation_agent = ConversationAgent()  # 初始化对话代理
-        self.chat_history = self.conversation_agent.get_conversation_history()
+        self.trigger_threshold = 6  # 每6条消息触发一次工作流
+        self.init_chat_history()
+
+    def init_chat_history(self):
+        """初始化聊天历史记录"""
+
+        prompt_template = """你是一位专业的回忆录采访者。你的任务是通过对话的方式，引导用户回忆和分享他们人生中的重要经历、情感和故事。
+
+                请遵循以下原则：
+                1. 以温和友善的态度与用户交谈，营造轻松舒适的氛围
+                2. 循序渐进地引导用户展开回忆，从简单的话题逐渐深入
+                3. 针对用户提到的关键事件、人物或情感进行追问，获取更丰富的细节
+                4. 适时给予共情回应，鼓励用户表达真实的想法和感受
+                5. 注意保护用户隐私，对敏感话题保持谨慎
+
+                你的目标是帮助用户梳理生命历程中的重要片段，收集有价值的回忆素材，为创作一部完整的回忆录做准备。"""
+        messages = [
+            {"role": "system", "content": prompt_template}
+        ]
+        # 确保返回的是列表类型
+        self.chat_history = messages
         self.message_count = 1
-        self.trigger_threshold = 5  # 每5条消息触发一次工作流
 
     async def chat(self, user_input: str) -> Dict[str, Any]:
         """处理用户输入，返回AI响应"""
@@ -40,7 +61,6 @@ class ChatService:
                 key="process_user_input",
                 value="RAG"
             )
-
 
             # 生成AI响应
             response = self.conversation_agent.chat(user_input)
@@ -76,7 +96,6 @@ class ChatService:
                 key="recent_history",
                 value=self.chat_history[-5:] if len(self.chat_history) > 0 else []
             )
-
 
             return result
 
@@ -124,18 +143,4 @@ class ChatService:
 
     def clear_history(self):
         """清空当前对话历史"""
-        prompt_template = """你是一位专业的回忆录采访者。你的任务是通过对话的方式，引导用户回忆和分享他们人生中的重要经历、情感和故事。
-
-        请遵循以下原则：
-        1. 以温和友善的态度与用户交谈，营造轻松舒适的氛围
-        2. 循序渐进地引导用户展开回忆，从简单的话题逐渐深入
-        3. 针对用户提到的关键事件、人物或情感进行追问，获取更丰富的细节
-        4. 适时给予共情回应，鼓励用户表达真实的想法和感受
-        5. 注意保护用户隐私，对敏感话题保持谨慎
-
-        你的目标是帮助用户梳理生命历程中的重要片段，收集有价值的回忆素材，为创作一部完整的回忆录做准备。"""
-        messages = [
-            {"role": "system", "content": prompt_template}
-        ]
-        self.current_dialogue = messages
-        self.dialogue_count = 1
+        self.init_chat_history()

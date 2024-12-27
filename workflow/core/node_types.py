@@ -91,12 +91,16 @@ class NarrativeNode(BaseNode):
             # 添加监控点：工作单元叙述体结果
             await monitor_pool.record(
                 category="workflows",
-                key="results_narrative",
+                key="node_results",
                 value={
-                    "work_unit_id": work_unit["id"],
-                    "content": narrative_text
-                }
+                    "narrative": {
+                        "content": narrative_text
+                    }
+                },
+                unit_id=work_unit["id"],
+                mode="merge"
             )
+
 
             return work_unit
 
@@ -150,12 +154,16 @@ class SVGNode(BaseNode):
             # 添加监控点：工作单元svg结果
             await monitor_pool.record(
                 category="workflows",
-                key="results_svg",
+                key="node_results",
                 value={
-                    "work_unit_id": work_unit["id"],
-                    "content": svg_content
-                }
+                    "svg": {
+                        "content": svg_content
+                    }
+                },
+                unit_id=work_unit["id"],
+                mode="merge"
             )
+
 
             return work_unit
 
@@ -265,16 +273,19 @@ class AnalysisNode(BaseNode):
             work_unit["results"]["analyse"] = {
                 "content": merged_results,
             }
+
             # 添加监控点：工作单元分析任务结果
             await monitor_pool.record(
                 category="workflows",
-                key="results_analyse",
+                key="node_results",
                 value={
-                    "work_unit_id": work_unit["id"],
-                    "content": merged_results
-                }
+                    "analyse": {
+                        "content": merged_results
+                    }
+                },
+                unit_id=work_unit["id"],
+                mode="merge"
             )
-
 
 
         except Exception as e:

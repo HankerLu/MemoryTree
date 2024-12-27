@@ -1,561 +1,296 @@
-(.venv) PS D:\PycharmProjects\MemoryTree-main> uvicorn app:app --reload --port 8000
-INFO:     Will watch for changes in these directories: ['D:\\PycharmProjects\\MemoryTree-main']
-INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [12976] using StatReload
-Debug - API密钥: e64b996267bee6ba0252a5d46a143ff4.3RZ8v4qZ2DbYoJbk
-Debug - API密钥: e64b996267bee6ba0252a5d46a143ff4.3RZ8v4qZ2DbYoJbk
-INFO:     Started server process [12548]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-2024-12-27 09:49:48 - INFO - 处理用户输入: 我想聊聊我的经历...
-2024-12-27 09:50:07 - INFO - 处理用户输入: 我最喜欢打篮球...
-2024-12-27 09:50:09 - INFO - 触发工作流: 8d6097f5-8947-4649-bf30-50224582e031
-2024-12-27 09:50:09 - INFO - 开始处理工作单元: 8d6097f5-8947-4649-bf30-50224582e031
-2024-12-27 09:50:22 - INFO - 叙事生成完成: 8d6097f5-8947-4649-bf30-50224582e031
-2024-12-27 09:51:08,380 INFO sqlalchemy.engine.Engine SELECT DATABASE()
-2024-12-27 09:51:08 - INFO - SELECT DATABASE()
-2024-12-27 09:51:08,381 INFO sqlalchemy.engine.Engine [raw sql] ()
-2024-12-27 09:51:08 - INFO - [raw sql] ()
-2024-12-27 09:51:08,383 INFO sqlalchemy.engine.Engine SELECT @@sql_mode
-2024-12-27 09:51:08 - INFO - SELECT @@sql_mode
-2024-12-27 09:51:08,384 INFO sqlalchemy.engine.Engine [raw sql] ()
-2024-12-27 09:51:08 - INFO - [raw sql] ()
-2024-12-27 09:51:08,385 INFO sqlalchemy.engine.Engine SELECT @@lower_case_table_names
-2024-12-27 09:51:08 - INFO - SELECT @@lower_case_table_names
-2024-12-27 09:51:08,385 INFO sqlalchemy.engine.Engine [raw sql] ()
-2024-12-27 09:51:08 - INFO - [raw sql] ()
-2024-12-27 09:51:08,387 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2024-12-27 09:51:08 - INFO - BEGIN (implicit)
-2024-12-27 09:51:08,388 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,389 INFO sqlalchemy.engine.Engine [generated in 0.00049s] ('8d6097f5-8947-4649-bf30-50224582e031', 'system', '你是一位专业的回忆录采访者。你的任务是通过对话的方
-，引导用户回忆和分享他们人生中的重要经历、情感和故事。\n\n请遵循以下原则：\n1. 以温和友善的态度与用户交谈，营造轻松舒适的氛围\n2. 循序渐进地引导用户展开回忆，从简单的话题逐渐深入入
-n3. 针对用户提到的关键事件、人物或情感进行追问，获取更丰富的细节\n4. 适时给予共情回应，鼓励用户表达真实的想法和感受\n5. 注意保护用户隐私，对敏感话题保持谨慎\n\n你的目标是帮助用户  
-梳理生命历程中的重要片段，收集有价值的回忆素材，为创作一部完整的回忆录做准备。', 1, datetime.datetime(2024, 12, 27, 9, 51, 8, 388145), datetime.datetime(2024, 12, 27, 9, 51, 8, 388145))
-2024-12-27 09:51:08 - INFO - [generated in 0.00049s] ('8d6097f5-8947-4649-bf30-50224582e031', 'system', '你是一位专业的回忆录采访者。你的任务是通过对话的方式，引导用户回忆和分享他 
-们人生中的重要经历、情感和故事。\n\n请遵循以下原则：\n1. 以温和友善的态度与用户交谈，营造轻松舒适的氛围\n2. 循序渐进地引导用户展开回忆，从简单的话题逐渐深入\n3. 针对用户提到的关键 
-事件、人物或情感进行追问，获取更丰富的细节\n4. 适时给予共情回应，鼓励用户表达真实的想法和感受\n5. 注意保护用户隐私，对敏感话题保持谨慎\n\n你的目标是帮助用户梳理生命历程中的重要片段收集有价值的回忆素材，为创作一部完整的回忆录做准备。', 1, datetime.datetime(2024, 12, 27, 9, 51, 8, 388145), datetime.datetime(2024, 12, 27, 9, 51, 8, 388145))
-2024-12-27 09:51:08,401 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,402 INFO sqlalchemy.engine.Engine [cached since 0.01348s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'user', '我想聊聊我的经历', 2, datetime.datetime(2024, 12, 27, 9, 51, 8, 401145), datetime.datetime(2024, 12, 27, 9, 51, 8, 401145))
-2024-12-27 09:51:08 - INFO - [cached since 0.01348s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'user', '我想聊聊我的经历', 2, datetime.datetime(2024, 12, 27, 9, 51, 8, 401145), datetime.datetime(2024, 12, 27, 9, 51, 8, 401145))
-2024-12-27 09:51:08,403 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,403 INFO sqlalchemy.engine.Engine [cached since 0.01476s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'user', '我想聊聊我的经历', 3, datetime.datetime(2024, 12, 27, 9, 51, 8, 403147), datetime.datetime(2024, 12, 27, 9, 51, 8, 403147))
-2024-12-27 09:51:08 - INFO - [cached since 0.01476s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'user', '我想聊聊我的经历', 3, datetime.datetime(2024, 12, 27, 9, 51, 8, 403147), datetime.datetime(2024, 12, 27, 9, 51, 8, 403147))
-2024-12-27 09:51:08,404 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,404 INFO sqlalchemy.engine.Engine [cached since 0.01591s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'assistant', '非常好，我很高兴你能打开心扉与我分享你的故 
-事。我们可以从一些简单的话题开始，比如你的童年时光。你能告诉我你小时候最喜欢做的事情是什么吗？那些日子里有没有什么特别有趣或者难忘的经历？我们可以一边聊一边深入探索那些对你影响深远日子。', 4, datetime.datetime(2024, 12, 27, 9, 51, 8, 404145), datetime.datetime(2024, 12, 27, 9, 51, 8, 404145))
-2024-12-27 09:51:08 - INFO - [cached since 0.01591s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'assistant', '非常好，我很高兴你能打开心扉与我分享你的故事。我们可以从一些简单的话
-开始，比如你的童年时光。你能告诉我你小时候最喜欢做的事情是什么吗？那些日子里有没有什么特别有趣或者难忘的经历？我们可以一边聊一边深入探索那些对你影响深远的日子。', 4, datetime.dat tetime(2024, 12, 27, 9, 51, 8, 404145), datetime.datetime(2024, 12, 27, 9, 51, 8, 404145))
-2024-12-27 09:51:08,405 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,406 INFO sqlalchemy.engine.Engine [cached since 0.01732s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'assistant', '非常好，我很高兴你能打开心扉与我分享你的故 
-事。我们可以从一些简单的话题开始，比如你的童年时光。你能告诉我你小时候最喜欢做的事情是什么吗？那些日子里有没有什么特别有趣或者难忘的经历？我们可以一边聊一边深入探索那些对你影响深远日子。', 5, datetime.datetime(2024, 12, 27, 9, 51, 8, 405145), datetime.datetime(2024, 12, 27, 9, 51, 8, 405145))
-2024-12-27 09:51:08 - INFO - [cached since 0.01732s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'assistant', '非常好，我很高兴你能打开心扉与我分享你的故事。我们可以从一些简单的话
-开始，比如你的童年时光。你能告诉我你小时候最喜欢做的事情是什么吗？那些日子里有没有什么特别有趣或者难忘的经历？我们可以一边聊一边深入探索那些对你影响深远的日子。', 5, datetime.dat tetime(2024, 12, 27, 9, 51, 8, 405145), datetime.datetime(2024, 12, 27, 9, 51, 8, 405145))
-2024-12-27 09:51:08,420 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,420 INFO sqlalchemy.engine.Engine [cached since 0.03167s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'user', '我最喜欢打篮球', 6, datetime.datetime(2024, 12, 27, 9, 51, 8, 420147), datetime.datetime(2024, 12, 27, 9, 51, 8, 420147))
-2024-12-27 09:51:08 - INFO - [cached since 0.03167s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'user', '我最喜欢打篮球', 6, datetime.datetime(2024, 12, 27, 9, 51, 8, 420147), datetime.datetime(2024, 12, 27, 9, 51, 8, 420147))
-2024-12-27 09:51:08,421 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,421 INFO sqlalchemy.engine.Engine [cached since 0.03296s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'user', '我最喜欢打篮球', 7, datetime.datetime(2024, 12, 27, 9, 51, 8, 421144), datetime.datetime(2024, 12, 27, 9, 51, 8, 421144))
-2024-12-27 09:51:08 - INFO - [cached since 0.03296s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'user', '我最喜欢打篮球', 7, datetime.datetime(2024, 12, 27, 9, 51, 8, 421144), datetime.datetime(2024, 12, 27, 9, 51, 8, 421144))
-2024-12-27 09:51:08,422 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,423 INFO sqlalchemy.engine.Engine [cached since 0.03436s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'assistant', '那真是太棒了！篮球是一项很好的运动，不仅能 
-够锻炼身体，还能够培养团队精神和竞争意识。你能不能分享一下，你是怎么开始对篮球产生兴趣的？有没有什么特别的人或者事件促使你走向篮球场？', 8, datetime.datetime(2024, 12, 27, 9, 51, 8, 422146), datetime.datetime(2024, 12, 27, 9, 51, 8, 422146))
-2024-12-27 09:51:08 - INFO - [cached since 0.03436s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'assistant', '那真是太棒了！篮球是一项很好的运动，不仅能够锻炼身体，还能够培养团队
-神和竞争意识。你能不能分享一下，你是怎么开始对篮球产生兴趣的？有没有什么特别的人或者事件促使你走向篮球场？', 8, datetime.datetime(2024, 12, 27, 9, 51, 8, 422146), datetime.dateti ime(2024, 12, 27, 9, 51, 8, 422146))
-2024-12-27 09:51:08,424 INFO sqlalchemy.engine.Engine INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO dialogue_history (session_id, `role`, content, sequence_number, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08,442 INFO sqlalchemy.engine.Engine [cached since 0.05408s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'assistant', '那真是太棒了！篮球是一项很好的运动，不仅能 
-够锻炼身体，还能够培养团队精神和竞争意识。你能不能分享一下，你是怎么开始对篮球产生兴趣的？有没有什么特别的人或者事件促使你走向篮球场？', 9, datetime.datetime(2024, 12, 27, 9, 51, 8, 424145), datetime.datetime(2024, 12, 27, 9, 51, 8, 424145))
-2024-12-27 09:51:08 - INFO - [cached since 0.05408s ago] ('8d6097f5-8947-4649-bf30-50224582e031', 'assistant', '那真是太棒了！篮球是一项很好的运动，不仅能够锻炼身体，还能够培养团队
-神和竞争意识。你能不能分享一下，你是怎么开始对篮球产生兴趣的？有没有什么特别的人或者事件促使你走向篮球场？', 9, datetime.datetime(2024, 12, 27, 9, 51, 8, 424145), datetime.dateti ime(2024, 12, 27, 9, 51, 8, 424145))
-2024-12-27 09:51:08,444 INFO sqlalchemy.engine.Engine INSERT INTO narratives (session_id, content, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO narratives (session_id, content, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,445 INFO sqlalchemy.engine.Engine [generated in 0.00049s] ('8d6097f5-8947-4649-bf30-50224582e031', '在那个被晨光温柔拥抱的童年时光里，我最爱做的事情，莫过于和一
-伙伴们在篮球场上挥洒汗水。那是一项充满节奏与活力的运动，篮球在我掌心跳跃的瞬间，似乎也带走了所有的烦恼和忧愁。\n\n记得那时候，我开始对篮球产生兴趣，全因我的父亲。他是一位狂热的篮篮
-爱好者，家中摆满了各种篮球比赛的录像带。每当夜幕降临 ... (254 characters truncated) ... 。那一刻，我感受到了从未有过的激动和自豪，仿佛所有的努力都在那一刻得到了回报。\n\n篮球，不不
-锻炼了我的身体，更教会了我团队合作与拼搏精神。回望过去，那些在篮球场上的日子，成为了我人生中最宝贵的财富。如今，当我再次拿起篮球，那熟悉的感觉仍然让我心跳加速，仿佛又回到了那个充充激情和梦想的童年时光。', datetime.datetime(2024, 12, 27, 9, 51, 8, 444145), datetime.datetime(2024, 12, 27, 9, 51, 8, 444145))
-2024-12-27 09:51:08 - INFO - [generated in 0.00049s] ('8d6097f5-8947-4649-bf30-50224582e031', '在那个被晨光温柔拥抱的童年时光里，我最爱做的事情，莫过于和一群伙伴们在篮球场上挥洒汗 
-水。那是一项充满节奏与活力的运动，篮球在我掌心跳跃的瞬间，似乎也带走了所有的烦恼和忧愁。\n\n记得那时候，我开始对篮球产生兴趣，全因我的父亲。他是一位狂热的篮球爱好者，家中摆满了各种
-球比赛的录像带。每当夜幕降临 ... (254 characters truncated) ... 。那一刻，我感受到了从未有过的激动和自豪，仿佛所有的努力都在那一刻得到了回报。\n\n篮球，不仅锻炼了我的身体，更教会会
-我团队合作与拼搏精神。回望过去，那些在篮球场上的日子，成为了我人生中最宝贵的财富。如今，当我再次拿起篮球，那熟悉的感觉仍然让我心跳加速，仿佛又回到了那个充满激情和梦想的童年时光。。, datetime.datetime(2024, 12, 27, 9, 51, 8, 444145), datetime.datetime(2024, 12, 27, 9, 51, 8, 444145))
-2024-12-27 09:51:08,452 INFO sqlalchemy.engine.Engine INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)  
-2024-12-27 09:51:08,452 INFO sqlalchemy.engine.Engine [generated in 0.00064s] (12, '在那个被晨光温柔拥抱的童年时光里，我最爱做的事情，莫过于和一群伙伴们在篮球场上挥洒汗水。那是一项
-满节奏与活力的运动，篮球在我掌心跳跃的瞬间，似乎也带走了所有的烦恼和忧愁。', 1, '情感表达', datetime.datetime(2024, 12, 27, 9, 51, 8, 452148), datetime.datetime(2024, 12, 27, 9,   51, 8, 452148))
-2024-12-27 09:51:08 - INFO - [generated in 0.00064s] (12, '在那个被晨光温柔拥抱的童年时光里，我最爱做的事情，莫过于和一群伙伴们在篮球场上挥洒汗水。那是一项充满节奏与活力的运动，篮 球在我掌心跳跃的瞬间，似乎也带走了所有的烦恼和忧愁。', 1, '情感表达', datetime.datetime(2024, 12, 27, 9, 51, 8, 452148), datetime.datetime(2024, 12, 27, 9, 51, 8, 452148))
-2024-12-27 09:51:08,460 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,460 INFO sqlalchemy.engine.Engine [generated in 0.00053s] ('时间维度', '童年')
-2024-12-27 09:51:08 - INFO - [generated in 0.00053s] ('时间维度', '童年')
-2024-12-27 09:51:08,470 INFO sqlalchemy.engine.Engine SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08 - INFO - SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08,470 INFO sqlalchemy.engine.Engine [generated in 0.00058s] (41,)
-2024-12-27 09:51:08 - INFO - [generated in 0.00058s] (41,)
-2024-12-27 09:51:08,477 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,477 INFO sqlalchemy.engine.Engine [cached since 0.01742s ago] ('场景维度', '家庭')
-2024-12-27 09:51:08 - INFO - [cached since 0.01742s ago] ('场景维度', '家庭')
-2024-12-27 09:51:08,479 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time 
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,479 INFO sqlalchemy.engine.Engine [cached since 0.01922s ago] ('场景维度', '亲子关系')
-2024-12-27 09:51:08 - INFO - [cached since 0.01922s ago] ('场景维度', '亲子关系')
-2024-12-27 09:51:08,480 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,481 INFO sqlalchemy.engine.Engine [cached since 0.0209s ago] ('场景维度', '社交场景')
-2024-12-27 09:51:08 - INFO - [cached since 0.0209s ago] ('场景维度', '社交场景')
-2024-12-27 09:51:08,483 INFO sqlalchemy.engine.Engine INSERT INTO tags (dimension, tag_value, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO tags (dimension, tag_value, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,483 INFO sqlalchemy.engine.Engine [generated in 0.00059s] ('场景维度', '社交场景', datetime.datetime(2024, 12, 27, 9, 51, 8, 483179), datetime.datetime(2024, 12, 27, 9, 51, 8, 483179))
-2024-12-27 09:51:08 - INFO - [generated in 0.00059s] ('场景维度', '社交场景', datetime.datetime(2024, 12, 27, 9, 51, 8, 483179), datetime.datetime(2024, 12, 27, 9, 51, 8, 483179)) 
-2024-12-27 09:51:08,485 INFO sqlalchemy.engine.Engine INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,486 INFO sqlalchemy.engine.Engine [generated in 0.00049s] [(41, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 485146), datetime.datetime(2024, 12, 27, 9, 51, 8,
- 485146)), (41, 22, datetime.datetime(2024, 12, 27, 9, 51, 8, 485146), datetime.datetime(2024, 12, 27, 9, 51, 8, 485146)), (41, 33, datetime.datetime(2024, 12, 27, 9, 51, 8, 485146), datetime.datetime(2024, 12, 27, 9, 51, 8, 485146))]
-2024-12-27 09:51:08 - INFO - [generated in 0.00049s] [(41, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 485146), datetime.datetime(2024, 12, 27, 9, 51, 8, 485146)), (41, 22, datet
-ime.datetime(2024, 12, 27, 9, 51, 8, 485146), datetime.datetime(2024, 12, 27, 9, 51, 8, 485146)), (41, 33, datetime.datetime(2024, 12, 27, 9, 51, 8, 485146), datetime.datetime(2024, 12, 27, 9, 51, 8, 485146))]
-2024-12-27 09:51:08,487 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,488 INFO sqlalchemy.engine.Engine [cached since 0.02816s ago] ('场景维度', '朋友关系')
-2024-12-27 09:51:08 - INFO - [cached since 0.02816s ago] ('场景维度', '朋友关系')
-2024-12-27 09:51:08,490 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,490 INFO sqlalchemy.engine.Engine [cached since 0.0304s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08 - INFO - [cached since 0.0304s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08,492 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,492 INFO sqlalchemy.engine.Engine [cached since 0.0325s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08 - INFO - [cached since 0.0325s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08,493 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time 
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,494 INFO sqlalchemy.engine.Engine [cached since 0.03432s ago] ('人物维度', '朋友')
-2024-12-27 09:51:08 - INFO - [cached since 0.03432s ago] ('人物维度', '朋友')
-2024-12-27 09:51:08,496 INFO sqlalchemy.engine.Engine INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)  
-2024-12-27 09:51:08,496 INFO sqlalchemy.engine.Engine [cached since 0.04429s ago] (12, '记得那时候，我开始对篮球产生兴趣，全因我的父亲。他是一位狂热的篮球爱好者，家中摆满了各种篮球
-赛的录像带。每当夜幕降临，父亲总会把我叫到电视机前，指着一个又一个精彩的进球，向我讲述着篮球场上的故事。', 2, '事实描述', datetime.datetime(2024, 12, 27, 9, 51, 8, 496150), datet time.datetime(2024, 12, 27, 9, 51, 8, 496150))
-2024-12-27 09:51:08 - INFO - [cached since 0.04429s ago] (12, '记得那时候，我开始对篮球产生兴趣，全因我的父亲。他是一位狂热的篮球爱好者，家中摆满了各种篮球比赛的录像带。每当夜幕降 
-临，父亲总会把我叫到电视机前，指着一个又一个精彩的进球，向我讲述着篮球场上的故事。', 2, '事实描述', datetime.datetime(2024, 12, 27, 9, 51, 8, 496150), datetime.datetime(2024, 12, 27, 9, 51, 8, 496150))
-2024-12-27 09:51:08,497 INFO sqlalchemy.engine.Engine INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,498 INFO sqlalchemy.engine.Engine [cached since 0.01283s ago] [(41, 52, datetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(2024, 12, 27, 9, 51
-, 8, 497146)), (41, 43, datetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(2024, 12, 27, 9, 51, 8, 497146)), (41, 26, datetime.datetime(2024, 12, 27, 9, 51, 8, 49
-7146), datetime.datetime(2024, 12, 27, 9, 51, 8, 497146)), (41, 27, datetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(2024, 12, 27, 9, 51, 8, 497146)), (41, 34, datetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(2024, 12, 27, 9, 51, 8, 497146))]
-2024-12-27 09:51:08 - INFO - [cached since 0.01283s ago] [(41, 52, datetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(2024, 12, 27, 9, 51, 8, 497146)), (41, 43, d
-atetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(2024, 12, 27, 9, 51, 8, 497146)), (41, 26, datetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(
-2024, 12, 27, 9, 51, 8, 497146)), (41, 27, datetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(2024, 12, 27, 9, 51, 8, 497146)), (41, 34, datetime.datetime(2024, 12, 27, 9, 51, 8, 497146), datetime.datetime(2024, 12, 27, 9, 51, 8, 497146))]
-2024-12-27 09:51:08,500 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,500 INFO sqlalchemy.engine.Engine [cached since 0.04037s ago] ('时间维度', '童年')
-2024-12-27 09:51:08 - INFO - [cached since 0.04037s ago] ('时间维度', '童年')
-2024-12-27 09:51:08,502 INFO sqlalchemy.engine.Engine SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08 - INFO - SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08,502 INFO sqlalchemy.engine.Engine [cached since 0.03258s ago] (42,)
-2024-12-27 09:51:08 - INFO - [cached since 0.03258s ago] (42,)
-2024-12-27 09:51:08,503 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,504 INFO sqlalchemy.engine.Engine [cached since 0.04408s ago] ('场景维度', '家庭')
-2024-12-27 09:51:08 - INFO - [cached since 0.04408s ago] ('场景维度', '家庭')
-2024-12-27 09:51:08,505 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,506 INFO sqlalchemy.engine.Engine [cached since 0.04577s ago] ('场景维度', '亲子关系')
-2024-12-27 09:51:08 - INFO - [cached since 0.04577s ago] ('场景维度', '亲子关系')
-2024-12-27 09:51:08,507 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,507 INFO sqlalchemy.engine.Engine [cached since 0.04754s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08 - INFO - [cached since 0.04754s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08,509 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,509 INFO sqlalchemy.engine.Engine [cached since 0.0494s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08 - INFO - [cached since 0.0494s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08,511 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time 
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,511 INFO sqlalchemy.engine.Engine [cached since 0.05149s ago] ('人物维度', '家庭成员')
-2024-12-27 09:51:08 - INFO - [cached since 0.05149s ago] ('人物维度', '家庭成员')
-2024-12-27 09:51:08,513 INFO sqlalchemy.engine.Engine INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)  
-2024-12-27 09:51:08,513 INFO sqlalchemy.engine.Engine [cached since 0.06172s ago] (12, '那些瞬间，篮球在我心中种下了梦想的种子。', 3, '情感表达', datetime.datetime(2024, 12, 27, 9, 51, 8, 513182), datetime.datetime(2024, 12, 27, 9, 51, 8, 513182))
-2024-12-27 09:51:08 - INFO - [cached since 0.06172s ago] (12, '那些瞬间，篮球在我心中种下了梦想的种子。', 3, '情感表达', datetime.datetime(2024, 12, 27, 9, 51, 8, 513182), datetime.datetime(2024, 12, 27, 9, 51, 8, 513182))
-2024-12-27 09:51:08,515 INFO sqlalchemy.engine.Engine INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,515 INFO sqlalchemy.engine.Engine [cached since 0.03027s ago] [(42, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51
-, 8, 515150)), (42, 22, datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150)), (42, 33, datetime.datetime(2024, 12, 27, 9, 51, 8, 51
-5150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150)), (42, 26, datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150)), (42, 27, 
-datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150)), (42, 35, datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150))]
-2024-12-27 09:51:08 - INFO - [cached since 0.03027s ago] [(42, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150)), (42, 22, d
-atetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150)), (42, 33, datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(
-2024, 12, 27, 9, 51, 8, 515150)), (42, 26, datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150)), (42, 27, datetime.datetime(2024, 1
-2, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150)), (42, 35, datetime.datetime(2024, 12, 27, 9, 51, 8, 515150), datetime.datetime(2024, 12, 27, 9, 51, 8, 515150))]
-2024-12-27 09:51:08,517 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,518 INFO sqlalchemy.engine.Engine [cached since 0.05803s ago] ('时间维度', '童年')
-2024-12-27 09:51:08 - INFO - [cached since 0.05803s ago] ('时间维度', '童年')
-2024-12-27 09:51:08,519 INFO sqlalchemy.engine.Engine SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08 - INFO - SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08,519 INFO sqlalchemy.engine.Engine [cached since 0.04972s ago] (43,)
-2024-12-27 09:51:08 - INFO - [cached since 0.04972s ago] (43,)
-2024-12-27 09:51:08,520 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,521 INFO sqlalchemy.engine.Engine [cached since 0.0612s ago] ('时间维度', '小学')
-2024-12-27 09:51:08 - INFO - [cached since 0.0612s ago] ('时间维度', '小学')
-2024-12-27 09:51:08,522 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,523 INFO sqlalchemy.engine.Engine [cached since 0.06285s ago] ('场景维度', '学校场景')
-2024-12-27 09:51:08 - INFO - [cached since 0.06285s ago] ('场景维度', '学校场景')
-2024-12-27 09:51:08,524 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,524 INFO sqlalchemy.engine.Engine [cached since 0.06461s ago] ('场景维度', '同学关系')
-2024-12-27 09:51:08 - INFO - [cached since 0.06461s ago] ('场景维度', '同学关系')
-2024-12-27 09:51:08,525 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time 
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,526 INFO sqlalchemy.engine.Engine [cached since 0.06626s ago] ('场景维度', '社交场景')
-2024-12-27 09:51:08 - INFO - [cached since 0.06626s ago] ('场景维度', '社交场景')
-2024-12-27 09:51:08,527 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,528 INFO sqlalchemy.engine.Engine [cached since 0.0678s ago] ('场景维度', '朋友关系')
-2024-12-27 09:51:08 - INFO - [cached since 0.0678s ago] ('场景维度', '朋友关系')
-2024-12-27 09:51:08,529 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,529 INFO sqlalchemy.engine.Engine [cached since 0.0693s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08 - INFO - [cached since 0.0693s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08,530 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,531 INFO sqlalchemy.engine.Engine [cached since 0.07119s ago] ('情感维度', '成就感')
-2024-12-27 09:51:08 - INFO - [cached since 0.07119s ago] ('情感维度', '成就感')
-2024-12-27 09:51:08,532 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,533 INFO sqlalchemy.engine.Engine [cached since 0.07286s ago] ('情感维度', '挫折')
-2024-12-27 09:51:08 - INFO - [cached since 0.07286s ago] ('情感维度', '挫折')
-2024-12-27 09:51:08,534 INFO sqlalchemy.engine.Engine INSERT INTO tags (dimension, tag_value, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO tags (dimension, tag_value, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,534 INFO sqlalchemy.engine.Engine [cached since 0.05155s ago] ('情感维度', '挫折', datetime.datetime(2024, 12, 27, 9, 51, 8, 534148), datetime.datetime(2024, 12, 27, 9, 51, 8, 534148))
-2024-12-27 09:51:08 - INFO - [cached since 0.05155s ago] ('情感维度', '挫折', datetime.datetime(2024, 12, 27, 9, 51, 8, 534148), datetime.datetime(2024, 12, 27, 9, 51, 8, 534148)) 
-2024-12-27 09:51:08,535 INFO sqlalchemy.engine.Engine INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,536 INFO sqlalchemy.engine.Engine [cached since 0.05075s ago] [(43, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51
-, 8, 535148)), (43, 28, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 24, datetime.datetime(2024, 12, 27, 9, 51, 8, 53
-5148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 29, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 52, 
-datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 43, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime
-(2024, 12, 27, 9, 51, 8, 535148)), (43, 26, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 30, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148))]
-2024-12-27 09:51:08 - INFO - [cached since 0.05075s ago] [(43, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 28, d
-atetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 24, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(
-2024, 12, 27, 9, 51, 8, 535148)), (43, 29, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 52, datetime.datetime(2024, 1
-2, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 43, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 
-535148)), (43, 26, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148)), (43, 30, datetime.datetime(2024, 12, 27, 9, 51, 8, 535148), datetime.datetime(2024, 12, 27, 9, 51, 8, 535148))]
-2024-12-27 09:51:08,538 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,538 INFO sqlalchemy.engine.Engine [cached since 0.07826s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08 - INFO - [cached since 0.07826s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08,539 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,540 INFO sqlalchemy.engine.Engine [cached since 0.07982s ago] ('人物维度', '朋友')
-2024-12-27 09:51:08 - INFO - [cached since 0.07982s ago] ('人物维度', '朋友')
-2024-12-27 09:51:08,541 INFO sqlalchemy.engine.Engine INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)  
-2024-12-27 09:51:08,541 INFO sqlalchemy.engine.Engine [cached since 0.08941s ago] (12, '那时的我，被这项运动深深吸引。每当课余时间，我总是飞奔向篮球场，和伙伴们一起练习投篮、运球。
-们模仿着心目中的篮球英雄，幻想着有朝一日，自己也能在赛场上大放异彩。那些日子，我们一起笑过、哭过，共同经历了无数的失败和成功。', 4, '情感表达', datetime.datetime(2024, 12, 27, 9, , 51, 8, 541146), datetime.datetime(2024, 12, 27, 9, 51, 8, 541146))
-2024-12-27 09:51:08 - INFO - [cached since 0.08941s ago] (12, '那时的我，被这项运动深深吸引。每当课余时间，我总是飞奔向篮球场，和伙伴们一起练习投篮、运球。我们模仿着心目中的篮球英 
-雄，幻想着有朝一日，自己也能在赛场上大放异彩。那些日子，我们一起笑过、哭过，共同经历了无数的失败和成功。', 4, '情感表达', datetime.datetime(2024, 12, 27, 9, 51, 8, 541146), datetime.datetime(2024, 12, 27, 9, 51, 8, 541146))
-2024-12-27 09:51:08,542 INFO sqlalchemy.engine.Engine INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,543 INFO sqlalchemy.engine.Engine [cached since 0.05765s ago] [(43, 53, datetime.datetime(2024, 12, 27, 9, 51, 8, 542144), datetime.datetime(2024, 12, 27, 9, 51
-, 8, 542144)), (43, 27, datetime.datetime(2024, 12, 27, 9, 51, 8, 542144), datetime.datetime(2024, 12, 27, 9, 51, 8, 542144)), (43, 34, datetime.datetime(2024, 12, 27, 9, 51, 8, 542144), datetime.datetime(2024, 12, 27, 9, 51, 8, 542144))]
-2024-12-27 09:51:08 - INFO - [cached since 0.05765s ago] [(43, 53, datetime.datetime(2024, 12, 27, 9, 51, 8, 542144), datetime.datetime(2024, 12, 27, 9, 51, 8, 542144)), (43, 27, d
-atetime.datetime(2024, 12, 27, 9, 51, 8, 542144), datetime.datetime(2024, 12, 27, 9, 51, 8, 542144)), (43, 34, datetime.datetime(2024, 12, 27, 9, 51, 8, 542144), datetime.datetime(2024, 12, 27, 9, 51, 8, 542144))]
-2024-12-27 09:51:08,544 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,545 INFO sqlalchemy.engine.Engine [cached since 0.08505s ago] ('时间维度', '童年')
-2024-12-27 09:51:08 - INFO - [cached since 0.08505s ago] ('时间维度', '童年')
-2024-12-27 09:51:08,546 INFO sqlalchemy.engine.Engine SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08 - INFO - SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08,547 INFO sqlalchemy.engine.Engine [cached since 0.07698s ago] (44,)
-2024-12-27 09:51:08 - INFO - [cached since 0.07698s ago] (44,)
-2024-12-27 09:51:08,548 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,548 INFO sqlalchemy.engine.Engine [cached since 0.08826s ago] ('时间维度', '小学')
-2024-12-27 09:51:08 - INFO - [cached since 0.08826s ago] ('时间维度', '小学')
-2024-12-27 09:51:08,549 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,549 INFO sqlalchemy.engine.Engine [cached since 0.08958s ago] ('场景维度', '学校场景')
-2024-12-27 09:51:08 - INFO - [cached since 0.08958s ago] ('场景维度', '学校场景')
-2024-12-27 09:51:08,551 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,551 INFO sqlalchemy.engine.Engine [cached since 0.09123s ago] ('场景维度', '同学关系')
-2024-12-27 09:51:08 - INFO - [cached since 0.09123s ago] ('场景维度', '同学关系')
-2024-12-27 09:51:08,552 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,553 INFO sqlalchemy.engine.Engine [cached since 0.09292s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08 - INFO - [cached since 0.09292s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08,554 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,554 INFO sqlalchemy.engine.Engine [cached since 0.09452s ago] ('情感维度', '成就感')
-2024-12-27 09:51:08 - INFO - [cached since 0.09452s ago] ('情感维度', '成就感')
-2024-12-27 09:51:08,556 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,556 INFO sqlalchemy.engine.Engine [cached since 0.09657s ago] ('事件维度', '重要决定')
-2024-12-27 09:51:08 - INFO - [cached since 0.09657s ago] ('事件维度', '重要决定')
-2024-12-27 09:51:08,558 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time 
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,558 INFO sqlalchemy.engine.Engine [cached since 0.0985s ago] ('事件维度', '转折点')
-2024-12-27 09:51:08 - INFO - [cached since 0.0985s ago] ('事件维度', '转折点')
-2024-12-27 09:51:08,560 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,560 INFO sqlalchemy.engine.Engine [cached since 0.1003s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08 - INFO - [cached since 0.1003s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08,562 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,562 INFO sqlalchemy.engine.Engine [cached since 0.1023s ago] ('人物维度', '朋友')
-2024-12-27 09:51:08 - INFO - [cached since 0.1023s ago] ('人物维度', '朋友')
-2024-12-27 09:51:08,563 INFO sqlalchemy.engine.Engine INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO narrative_paragraphs (narrative_id, content, sequence_number, paragraph_type, create_time, modified_time) VALUES (%s, %s, %s, %s, %s, %s)  
-2024-12-27 09:51:08,564 INFO sqlalchemy.engine.Engine [cached since 0.112s ago] (12, '其中最难忘的一次经历，是在一次校园篮球比赛中，我所在的队伍险些败北。就在比赛即将落幕之际，我意
-地投出了一记超远三分，球应声入网，最终帮助我们逆转了比赛。那一刻，我感受到了从未有过的激动和自豪，仿佛所有的努力都在那一刻得到了回报。', 5, '事实描述', datetime.datetime(2024, 12 2, 27, 9, 51, 8, 563148), datetime.datetime(2024, 12, 27, 9, 51, 8, 563148))
-2024-12-27 09:51:08 - INFO - [cached since 0.112s ago] (12, '其中最难忘的一次经历，是在一次校园篮球比赛中，我所在的队伍险些败北。就在比赛即将落幕之际，我意外地投出了一记超远三分， 
-球应声入网，最终帮助我们逆转了比赛。那一刻，我感受到了从未有过的激动和自豪，仿佛所有的努力都在那一刻得到了回报。', 5, '事实描述', datetime.datetime(2024, 12, 27, 9, 51, 8, 563148), datetime.datetime(2024, 12, 27, 9, 51, 8, 563148))
-2024-12-27 09:51:08,565 INFO sqlalchemy.engine.Engine INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,565 INFO sqlalchemy.engine.Engine [cached since 0.08015s ago] [(44, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51
-, 8, 565144)), (44, 28, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 24, datetime.datetime(2024, 12, 27, 9, 51, 8, 56
-5144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 29, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 26, 
-datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 30, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime
-(2024, 12, 27, 9, 51, 8, 565144)), (44, 50, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 51, datetime.datetime(2024, 
-12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 27, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 34, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144))]
-2024-12-27 09:51:08 - INFO - [cached since 0.08015s ago] [(44, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 28, d
-atetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 24, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(
-2024, 12, 27, 9, 51, 8, 565144)), (44, 29, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 26, datetime.datetime(2024, 1
-2, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 30, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 
-565144)), (44, 50, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 51, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)
-, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 27, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144)), (44, 34, datetime.datetime(2024, 12, 27, 9, 51, 8, 565144), datetime.datetime(2024, 12, 27, 9, 51, 8, 565144))]
-2024-12-27 09:51:08,568 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,569 INFO sqlalchemy.engine.Engine [cached since 0.109s ago] ('时间维度', '童年')
-2024-12-27 09:51:08 - INFO - [cached since 0.109s ago] ('时间维度', '童年')
-2024-12-27 09:51:08,570 INFO sqlalchemy.engine.Engine SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08 - INFO - SELECT tags.id AS tags_id, tags.dimension AS tags_dimension, tags.tag_value AS tags_tag_value, tags.create_time AS tags_create_time, tags.modified_time AS tags_modified_time
-FROM tags, paragraph_tag_associations
-WHERE %s = paragraph_tag_associations.paragraph_id AND tags.id = paragraph_tag_associations.tag_id
-2024-12-27 09:51:08,570 INFO sqlalchemy.engine.Engine [cached since 0.1007s ago] (45,)
-2024-12-27 09:51:08 - INFO - [cached since 0.1007s ago] (45,)
-2024-12-27 09:51:08,571 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,572 INFO sqlalchemy.engine.Engine [cached since 0.1121s ago] ('时间维度', '成年后期')
-2024-12-27 09:51:08 - INFO - [cached since 0.1121s ago] ('时间维度', '成年后期')
-2024-12-27 09:51:08,573 INFO sqlalchemy.engine.Engine INSERT INTO tags (dimension, tag_value, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO tags (dimension, tag_value, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,573 INFO sqlalchemy.engine.Engine [cached since 0.09065s ago] ('时间维度', '成年后期', datetime.datetime(2024, 12, 27, 9, 51, 8, 573144), datetime.datetime(2024, 12, 27, 9, 51, 8, 573144))
-2024-12-27 09:51:08 - INFO - [cached since 0.09065s ago] ('时间维度', '成年后期', datetime.datetime(2024, 12, 27, 9, 51, 8, 573144), datetime.datetime(2024, 12, 27, 9, 51, 8, 573144))
-2024-12-27 09:51:08,575 INFO sqlalchemy.engine.Engine INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,575 INFO sqlalchemy.engine.Engine [generated in 0.00048s] (45, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 575146), datetime.datetime(2024, 12, 27, 9, 51, 8, 575146))
-2024-12-27 09:51:08 - INFO - [generated in 0.00048s] (45, 21, datetime.datetime(2024, 12, 27, 9, 51, 8, 575146), datetime.datetime(2024, 12, 27, 9, 51, 8, 575146))
-2024-12-27 09:51:08,577 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,577 INFO sqlalchemy.engine.Engine [cached since 0.1173s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08 - INFO - [cached since 0.1173s ago] ('情感维度', '快乐')
-2024-12-27 09:51:08,578 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,579 INFO sqlalchemy.engine.Engine [cached since 0.1192s ago] ('情感维度', '成就感')
-2024-12-27 09:51:08 - INFO - [cached since 0.1192s ago] ('情感维度', '成就感')
-2024-12-27 09:51:08,580 INFO sqlalchemy.engine.Engine SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08 - INFO - SELECT tags.id, tags.dimension, tags.tag_value, tags.create_time, tags.modified_time
-FROM tags
-WHERE tags.dimension = %s AND tags.tag_value = %s
-2024-12-27 09:51:08,580 INFO sqlalchemy.engine.Engine [cached since 0.1207s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08 - INFO - [cached since 0.1207s ago] ('事件维度', '成长经历')
-2024-12-27 09:51:08,582 INFO sqlalchemy.engine.Engine INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08 - INFO - INSERT INTO paragraph_tag_associations (paragraph_id, tag_id, create_time, modified_time) VALUES (%s, %s, %s, %s)
-2024-12-27 09:51:08,582 INFO sqlalchemy.engine.Engine [cached since 0.0968s ago] [(45, 54, datetime.datetime(2024, 12, 27, 9, 51, 8, 582150), datetime.datetime(2024, 12, 27, 9, 51,
- 8, 582150)), (45, 26, datetime.datetime(2024, 12, 27, 9, 51, 8, 582150), datetime.datetime(2024, 12, 27, 9, 51, 8, 582150)), (45, 30, datetime.datetime(2024, 12, 27, 9, 51, 8, 582150), datetime.datetime(2024, 12, 27, 9, 51, 8, 582150)), (45, 27, datetime.datetime(2024, 12, 27, 9, 51, 8, 582150), datetime.datetime(2024, 12, 27, 9, 51, 8, 582150))]
-2024-12-27 09:51:08 - INFO - [cached since 0.0968s ago] [(45, 54, datetime.datetime(2024, 12, 27, 9, 51, 8, 582150), datetime.datetime(2024, 12, 27, 9, 51, 8, 582150)), (45, 26, datetime.datetime(2024, 12, 27, 9, 51, 8, 582150), datetime.datetime(2024, 12, 27, 9, 51, 8, 582150)), (45, 30, datetime.datetime(2024, 12, 27, 9, 51, 8, 582150), datetime.datetime(2024, 12, 27, 9, 51, 8, 582150)), (45, 27, datetime.datetime(2024, 12, 27, 9, 51, 8, 582150), datetime.datetime(2024, 12, 27, 9, 51, 8, 582150))]
-2024-12-27 09:51:08,583 INFO sqlalchemy.engine.Engine COMMIT
-2024-12-27 09:51:08 - INFO - COMMIT
-2024-12-27 09:51:08 - ERROR - SVG生成失败: 8d6097f5-8947-4649-bf30-50224582e031
-2024-12-27 09:51:08 - INFO - 分析任务完成: 8d6097f5-8947-4649-bf30-50224582e031
-2024-12-27 09:51:09 - INFO - 获取SVG结果: 8d6097f5-8947-4649-bf30-50224582e031
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [12548]
-INFO:     Stopping reloader process [12976]
+{
+    "workflows": {
+        "df5a3f09-0e40-421d-931e-045e91747136": {
+            "execution_log": [
+                {
+                    "value": {
+                        "node": "workflow",
+                        "event": "start",
+                        "status": "processing",
+                        "message": "开始处理工作流"
+                    },
+                    "timestamp": "2024-12-27T20:27:15.285591"
+                },
+                {
+                    "value": {
+                        "node": "narrative",
+                        "event": "start",
+                        "status": "processing",
+                        "message": "开始生成叙事"
+                    },
+                    "timestamp": "2024-12-27T20:27:15.286599"
+                },
+                {
+                    "value": {
+                        "node": "narrative",
+                        "event": "complete",
+                        "status": "completed",
+                        "message": "叙事生成完成"
+                    },
+                    "timestamp": "2024-12-27T20:27:24.283031"
+                },
+                {
+                    "value": {
+                        "node": "parallel",
+                        "event": "start",
+                        "status": "processing",
+                        "message": "开始并行处理SVG和分析任务"
+                    },
+                    "timestamp": "2024-12-27T20:27:24.284097"
+                },
+                {
+                    "value": {
+                        "node": "svg",
+                        "event": "complete",
+                        "status": "completed",
+                        "message": "SVG生成完成"
+                    },
+                    "timestamp": "2024-12-27T20:27:47.100331"
+                },
+                {
+                    "value": {
+                        "node": "analysis",
+                        "event": "complete",
+                        "status": "completed",
+                        "message": "分析任务完成"
+                    },
+                    "timestamp": "2024-12-27T20:27:47.100331"
+                }
+            ],
+            "node_results": [
+                {
+                    "value": {
+                        "narrative": {
+                            "content": "在我记忆的深处，篮球是我童年最温暖而鲜明的色彩。每当我想起那些无忧无虑的时光，篮球总是如影随形，成为我故事中的主角。\n\n小时候，我对于篮球的热爱仿佛是与生俱来的。记得第一次接触篮球，是在我八岁那年，一个阳光明媚的下午。我看着哥哥在篮球场上挥洒汗水，那种自由而充满活力的样子深深地吸引了我。我迫不及待地拿起篮球，尽管那时的我还无法掌握它的节奏，但那种感觉，就像是找到了一种全新的语言，一种能够表达内心世界的语言。\n\n我最喜欢的游戏，无疑就是和朋友们一起打篮球。我们常常在街角的小篮球场上玩耍，追逐着球的轨迹，享受着每一次投篮的快感。我记得有一个特别的玩具，那是一个破旧的篮球，尽管它已经不再崭新，但在我心中，它却是最珍贵的。我带着它走过了无数个日夜，它见证了我成长的每一个瞬间。\n\n篮球在我成长的过程中扮演了一个特殊角色。它不仅锻炼了我的身体，更教会了我团队合作的重要性。我记得有一次，我们参加了一场重要的比赛。那场比赛异常激烈，我们每个人都拼尽全力。在比赛的最后关头，我接到了队友的传球，面对篮筐，我深吸一口气，投篮——球应声入网。那一刻，全场爆发出热烈的掌声和欢呼声，我仿佛置身于一个梦幻般的世界。那种胜利的喜悦，至今仍然让我热血沸腾。\n\n篮球，是我童年的玩伴，是我青春的见证。它陪伴我度过了许多难忘的时光，塑造了我坚韧不拔的性格。每当回想起那些日子，我的心中总是涌起一股暖流，仿佛又回到了那个在篮球场上尽情挥洒汗水的少年。"
+                        }
+                    },
+                    "timestamp": "2024-12-27T20:27:24.283031"
+                },
+                {
+                    "value": {
+                        "svg": {
+                            "content": [
+                                "\n        <svg width=\"595\" height=\"842\" xmlns=\"http://www.w3.org/2000/svg\">\n            <rect width=\"100%\" height=\"100%\" fill=\"#FFFFFF\"/>\n        \n            <text x=\"297.5\" y=\"100\"\n                  text-anchor=\"middle\"\n                  font-family=\"SimSun, serif\"\n                  font-size=\"28\"\n                  fill=\"#000000\">\n                Chapter 1\n            </text>\n            \n            <g transform=\"translate(297.5, 150)\">\n                <line x1=\"-40\" y1=\"0\" x2=\"-15\" y2=\"0\" \n                      stroke=\"#000000\" stroke-width=\"0.5\"/>\n                <line x1=\"15\" y1=\"0\" x2=\"40\" y2=\"0\" \n                      stroke=\"#000000\" stroke-width=\"0.5\"/>\n                <circle cx=\"0\" cy=\"0\" r=\"1.5\" fill=\"#000000\"/>\n            </g>\n            \n            <text x=\"297.5\" y=\"200\"\n                  text-anchor=\"middle\"\n                  font-family=\"SimSun, serif\"\n                  font-size=\"28\"\n                  fill=\"#000000\">\n                回忆录\n            </text>\n            \n                <text x=\"70\" y=\"280\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    　　在我记忆的深处，篮球是我童年最\n                </text>\n                \n                <text x=\"70\" y=\"328\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    温暖而鲜明的色彩。每当我想起那些无忧无\n                </text>\n                \n                <text x=\"70\" y=\"376\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    虑的时光，篮球总是如影随形，成为我故事\n                </text>\n                \n                <text x=\"70\" y=\"424\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    中的主角。\n                </text>\n                \n                <text x=\"70\" y=\"482\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    　　小时候，我对于篮球的热爱仿佛是\n                </text>\n                \n                <text x=\"70\" y=\"530\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    与生俱来的。记得第一次接触篮球，是在我\n                </text>\n                \n                <text x=\"70\" y=\"578\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    八岁那年，一个阳光明媚的下午。我看着哥\n                </text>\n                \n                <text x=\"70\" y=\"626\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    哥在篮球场上挥洒汗水，那种自由而充满活\n                </text>\n                \n                <text x=\"70\" y=\"674\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    力的样子深深地吸引了我。我迫不及待地拿\n                </text>\n                \n            <!-- 页码 -->\n            <text x=\"297.5\" y=\"782\"\n                  text-anchor=\"middle\"\n                  font-family=\"Times New Roman, serif\"\n                  font-size=\"20\"\n                  fill=\"#000000\">\n                1\n            </text>\n        \n            </svg>\n        ",
+                                "\n        <svg width=\"595\" height=\"842\" xmlns=\"http://www.w3.org/2000/svg\">\n            <rect width=\"100%\" height=\"100%\" fill=\"#FFFFFF\"/>\n        \n                <text x=\"70\" y=\"100\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    起篮球，尽管那时的我还无法掌握它的节奏，\n                </text>\n                \n                <text x=\"70\" y=\"148\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    但那种感觉，就像是找到了一种全新的语言，\n                </text>\n                \n                <text x=\"70\" y=\"196\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    一种能够表达内心世界的语言。\n                </text>\n                \n                <text x=\"70\" y=\"254\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    　　我最喜欢的游戏，无疑就是和朋友\n                </text>\n                \n                <text x=\"70\" y=\"302\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    们一起打篮球。我们常常在街角的小篮球场\n                </text>\n                \n                <text x=\"70\" y=\"350\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    上玩耍，追逐着球的轨迹，享受着每一次投\n                </text>\n                \n                <text x=\"70\" y=\"398\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    篮的快感。我记得有一个特别的玩具，那是\n                </text>\n                \n                <text x=\"70\" y=\"446\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    一个破旧的篮球，尽管它已经不再崭新，但\n                </text>\n                \n                <text x=\"70\" y=\"494\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    在我心中，它却是最珍贵的。我带着它走过\n                </text>\n                \n                <text x=\"70\" y=\"542\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    了无数个日夜，它见证了我成长的每一个瞬\n                </text>\n                \n                <text x=\"70\" y=\"590\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    间。\n                </text>\n                \n                <text x=\"70\" y=\"648\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    　　篮球在我成长的过程中扮演了一个\n                </text>\n                \n                <text x=\"70\" y=\"696\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    特殊角色。它不仅锻炼了我的身体，更教会\n                </text>\n                \n            <!-- 页码 -->\n            <text x=\"297.5\" y=\"782\"\n                  text-anchor=\"middle\"\n                  font-family=\"Times New Roman, serif\"\n                  font-size=\"20\"\n                  fill=\"#000000\">\n                2\n            </text>\n        \n            </svg>\n        ",
+                                "\n        <svg width=\"595\" height=\"842\" xmlns=\"http://www.w3.org/2000/svg\">\n            <rect width=\"100%\" height=\"100%\" fill=\"#FFFFFF\"/>\n        \n                <text x=\"70\" y=\"100\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    了我团队合作的重要性。我记得有一次，我\n                </text>\n                \n                <text x=\"70\" y=\"148\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    们参加了一场重要的比赛。那场比赛异常激\n                </text>\n                \n                <text x=\"70\" y=\"196\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    烈，我们每个人都拼尽全力。在比赛的最后\n                </text>\n                \n                <text x=\"70\" y=\"244\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    关头，我接到了队友的传球，面对篮筐，我\n                </text>\n                \n                <text x=\"70\" y=\"292\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    深吸一口气，投篮——球应声入网。那一刻，\n                </text>\n                \n                <text x=\"70\" y=\"340\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    全场爆发出热烈的掌声和欢呼声，我仿佛置\n                </text>\n                \n                <text x=\"70\" y=\"388\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    身于一个梦幻般的世界。那种胜利的喜悦，\n                </text>\n                \n                <text x=\"70\" y=\"436\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    至今仍然让我热血沸腾。\n                </text>\n                \n                <text x=\"70\" y=\"494\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    　　篮球，是我童年的玩伴，是我青春\n                </text>\n                \n                <text x=\"70\" y=\"542\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    的见证。它陪伴我度过了许多难忘的时光，\n                </text>\n                \n                <text x=\"70\" y=\"590\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    塑造了我坚韧不拔的性格。每当回想起那些\n                </text>\n                \n                <text x=\"70\" y=\"638\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    日子，我的心中总是涌起一股暖流，仿佛又\n                </text>\n                \n                <text x=\"70\" y=\"686\"\n                      font-family=\"SimSun, serif\"\n                      font-size=\"24\"\n                      fill=\"#000000\">\n                    回到了那个在篮球场上尽情挥洒汗水的少年。\n                </text>\n                \n            <!-- 页码 -->\n            <text x=\"297.5\" y=\"782\"\n                  text-anchor=\"middle\"\n                  font-family=\"Times New Roman, serif\"\n                  font-size=\"20\"\n                  fill=\"#000000\">\n                3\n            </text>\n        \n            </svg>\n        "
+                            ]
+                        }
+                    },
+                    "timestamp": "2024-12-27T20:27:24.285099"
+                },
+                {
+                    "value": {
+                        "analyse": {
+                            "content": [
+                                {
+                                    "content": "在我记忆的深处，篮球是我童年最温暖而鲜明的色彩。每当我想起那些无忧无虑的时光，篮球总是如影随形，成为我故事中的主角。",
+                                    "type": "情感表达",
+                                    "tags": {
+                                        "时间维度": [
+                                            "童年"
+                                        ],
+                                        "情感维度": [
+                                            "快乐"
+                                        ],
+                                        "事件维度": [
+                                            "成长经历"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "content": "小时候，我对于篮球的热爱仿佛是与生俱来的。记得第一次接触篮球，是在我八岁那年，一个阳光明媚的下午。我看着哥哥在篮球场上挥洒汗水，那种自由而充满活力的样子深深地吸引了我。我迫不及待地拿起篮球，尽管那时的我还无法掌握它的节奏，但那种感觉，就像是找到了一种全新的语言，一种能够表达内心世界的语言。",
+                                    "type": "事实描述",
+                                    "tags": {
+                                        "时间维度": [
+                                            "童年",
+                                            "小学"
+                                        ],
+                                        "场景维度": [
+                                            "家庭",
+                                            "亲子关系"
+                                        ],
+                                        "情感维度": [
+                                            "快乐"
+                                        ],
+                                        "事件维度": [
+                                            "成长经历"
+                                        ],
+                                        "人物维度": [
+                                            "家庭成员"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "content": "我最喜欢的游戏，无疑就是和朋友们一起打篮球。我们常常在街角的小篮球场上玩耍，追逐着球的轨迹，享受着每一次投篮的快感。我记得有一个特别的玩具，那是一个破旧的篮球，尽管它已经不再崭新，但在我心中，它却是最珍贵的。我带着它走过了无数个日夜，它见证了我成长的每一个瞬间。",
+                                    "type": "情感表达",
+                                    "tags": {
+                                        "时间维度": [
+                                            "童年",
+                                            "小学"
+                                        ],
+                                        "场景维度": [
+                                            "社交场景",
+                                            "社团活动"
+                                        ],
+                                        "情感维度": [
+                                            "快乐"
+                                        ],
+                                        "事件维度": [
+                                            "成长经历"
+                                        ],
+                                        "人物维度": [
+                                            "朋友"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "content": "篮球在我成长的过程中扮演了一个特殊角色。它不仅锻炼了我的身体，更教会了我团队合作的重要性。我记得有一次，我们参加了一场重要的比赛。那场比赛异常激烈，我们每个人都拼尽全力。在比赛的最后关头，我接到了队友的传球，面对篮筐，我深吸一口气，投篮——球应声入网。那一刻，全场爆发出热烈的掌声和欢呼声，我仿佛置身于一个梦幻般的世界。那种胜利的喜悦，至今仍然让我热血沸腾。",
+                                    "type": "事实描述",
+                                    "tags": {
+                                        "时间维度": [
+                                            "童年",
+                                            "小学"
+                                        ],
+                                        "场景维度": [
+                                            "学校场景",
+                                            "学习经历"
+                                        ],
+                                        "情感维度": [
+                                            "成就感"
+                                        ],
+                                        "事件维度": [
+                                            "重要比赛",
+                                            "转折点"
+                                        ],
+                                        "人物维度": [
+                                            "同学"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "content": "篮球，是我童年的玩伴，是我青春的见证。它陪伴我度过了许多难忘的时光，塑造了我坚韧不拔的性格。每当回想起那些日子，我的心中总是涌起一股暖流，仿佛又回到了那个在篮球场上尽情挥洒汗水的少年。",
+                                    "type": "思考感悟",
+                                    "tags": {
+                                        "时间维度": [
+                                            "童年",
+                                            "青少年"
+                                        ],
+                                        "情感维度": [
+                                            "快乐"
+                                        ],
+                                        "事件维度": [
+                                            "成长经历"
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "timestamp": "2024-12-27T20:27:47.100331"
+                }
+            ]
+        }
+    },
+    "system": {
+        "start_time": {
+            "value": "2024-12-27T20:26:40.824600",
+            "timestamp": "2024-12-27T20:26:40.824600"
+        },
+        "status": {
+            "value": "running",
+            "timestamp": "2024-12-27T20:26:40.824600"
+        },
+        "workflows_overview": {
+            "value": {
+                "all_workflows": [
+                    "df5a3f09-0e40-421d-931e-045e91747136"
+                ],
+                "active_workflows": [
+                    "df5a3f09-0e40-421d-931e-045e91747136"
+                ],
+                "completed_workflows": [],
+                "failed_workflows": []
+            },
+            "timestamp": "2024-12-27T20:27:15.285591"
+        }
+    },
+    "chat": {
+        "process_user_input": {
+            "value": "RAG",
+            "timestamp": "2024-12-27T20:27:13.211561"
+        },
+        "system_history": {
+            "value": [
+                {
+                    "role": "system",
+                    "content": "你是一位专业的回忆录采访者。你的任务是通过对话的方式，引导用户回忆和分享他们人生中的重要经历、情感和故事。\n\n请遵循以下原则：\n1. 以温和友善的态度与用户交谈，营造轻松舒适的氛围\n2. 循序渐进地引导用户展开回忆，从简单的话题逐渐深入\n3. 针对用户提到的关键事件、人物或情感进行追问，获取更丰富的细节\n4. 适时给予共情回应，鼓励用户表达真实的想法和感受\n5. 注意保护用户隐私，对敏感话题保持谨慎\n\n你的目标是帮助用户梳理生命历程中的重要片段，收集有价值的回忆素材，为创作一部完整的回忆录做准备。"
+                },
+                {
+                    "role": "user",
+                    "content": "你好，我想聊聊我的经历",
+                    "timestamp": "2024-12-27T20:26:57.995403"
+                },
+                {
+                    "role": "user",
+                    "content": "你好，我想聊聊我的经历"
+                },
+                {
+                    "role": "assistant",
+                    "content": "您好！很高兴您愿意分享您的故事。在我们开始之前，我想先营造一个轻松舒适的环境，让您感到自在。我们可以从一些简单的话题开始，比如您童年的一些美好记忆。您能告诉我一些关于您童年的事情吗？比如说，您小时候最喜欢的游戏或者活动是什么？有没有什么特别的玩具或者宠物让您印象深刻的？"
+                },
+                {
+                    "role": "assistant",
+                    "content": "您好！很高兴您愿意分享您的故事。在我们开始之前，我想先营造一个轻松舒适的环境，让您感到自在。我们可以从一些简单的话题开始，比如您童年的一些美好记忆。您能告诉我一些关于您童年的事情吗？比如说，您小时候最喜欢的游戏或者活动是什么？有没有什么特别的玩具或者宠物让您印象深刻的？",
+                    "timestamp": "2024-12-27T20:27:01.371868"
+                },
+                {
+                    "role": "user",
+                    "content": "那必然是篮球，我最喜欢篮球了",
+                    "timestamp": "2024-12-27T20:27:13.211561"
+                },
+                {
+                    "role": "user",
+                    "content": "那必然是篮球，我最喜欢篮球了"
+                },
+                {
+                    "role": "assistant",
+                    "content": "，篮球显然对您来说非常重要。能分享一些关于您和篮球的特殊时刻吗？比如，您第一次接触篮球是在什么时候？或者有没有什么特别的比赛或者训练经历让您至今难忘？篮球在您成长的过程中扮演了怎样的角色？"
+                },
+                {
+                    "role": "assistant",
+                    "content": "，篮球显然对您来说非常重要。能分享一些关于您和篮球的特殊时刻吗？比如，您第一次接触篮球是在什么时候？或者有没有什么特别的比赛或者训练经历让您至今难忘？篮球在您成长的过程中扮演了怎样的角色？",
+                    "timestamp": "2024-12-27T20:27:15.283581"
+                }
+            ],
+            "timestamp": "2024-12-27T20:27:15.284589"
+        },
+        "recent_history": {
+            "value": [
+                {
+                    "role": "assistant",
+                    "content": "您好！很高兴您愿意分享您的故事。在我们开始之前，我想先营造一个轻松舒适的环境，让您感到自在。我们可以从一些简单的话题开始，比如您童年的一些美好记忆。您能告诉我一些关于您童年的事情吗？比如说，您小时候最喜欢的游戏或者活动是什么？有没有什么特别的玩具或者宠物让您印象深刻的？",
+                    "timestamp": "2024-12-27T20:27:01.371868"
+                },
+                {
+                    "role": "user",
+                    "content": "那必然是篮球，我最喜欢篮球了",
+                    "timestamp": "2024-12-27T20:27:13.211561"
+                },
+                {
+                    "role": "user",
+                    "content": "那必然是篮球，我最喜欢篮球了"
+                },
+                {
+                    "role": "assistant",
+                    "content": "，篮球显然对您来说非常重要。能分享一些关于您和篮球的特殊时刻吗？比如，您第一次接触篮球是在什么时候？或者有没有什么特别的比赛或者训练经历让您至今难忘？篮球在您成长的过程中扮演了怎样的角色？"
+                },
+                {
+                    "role": "assistant",
+                    "content": "，篮球显然对您来说非常重要。能分享一些关于您和篮球的特殊时刻吗？比如，您第一次接触篮球是在什么时候？或者有没有什么特别的比赛或者训练经历让您至今难忘？篮球在您成长的过程中扮演了怎样的角色？",
+                    "timestamp": "2024-12-27T20:27:15.283581"
+                }
+            ],
+            "timestamp": "2024-12-27T20:27:15.284589"
+        }
+    }
+}
