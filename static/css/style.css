@@ -151,7 +151,7 @@ body {
     color: #f44336;
 }
 
-/* 结果卡片流区域 */
+/* 结果片流区域 */
 .cards-container {
     display: flex;
     overflow-x: auto;
@@ -358,4 +358,40 @@ body {
 .workflow-status {
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
+}
+
+/* SVG 容器样式 */
+.svg-container {
+    max-width: 100%;
+    overflow-x: auto;
+    background: white;
+    padding: 10px;
+}
+
+.svg-container svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Modal 样式 */
+.modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-body pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.modal-body .svg-container {
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+
+.modal-body svg {
+    max-width: 100%;
+    height: auto;
 } 

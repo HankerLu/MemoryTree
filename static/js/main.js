@@ -1,50 +1,59 @@
-import { MonitorAPI, dataManager } from './api.js';
-import { updateSystemOverview, updateChatHistory, updateActiveWorkflow } from './workflow.js';
+import { dataManager } from './api.js';
+import { updateSystemOverview, updateChatHistory, updateUserInputAnalysis, 
+         updateRecentHistory, updateActiveWorkflow, updateLatestCompletedWorkflow, 
+         updateHistoryWorkflows, updateOtherWorkflows } from './workflow.js';
 
 // 等待 DOM 加载完成
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM加载完成，开始注册回调');
 
     // 注册系统状态更新
     dataManager.onUpdate('system-overview', (data) => {
         console.log('系统状态更新回调触发');
-        if (data && data.system) {
-            updateSystemOverview(data);
-            // 更新调试信息
-            document.getElementById('callback-status').textContent = '系统状态已更新';
-            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
-        }
+        updateSystemOverview(data);
     });
 
     // 注册对话历史更新
     dataManager.onUpdate('chat-history', (data) => {
         console.log('对话历史更新回调触发');
-        if (data && data.chat) {
-            updateChatHistory(data);
+        updateChatHistory(data);
+    });
+
+    // 注册用户输入更新
+    dataManager.onUpdate('user-input', (data) => {
+        console.log('用户输入更新回调触发');
+        updateUserInputAnalysis(data);
+    });
+
+    // 注册近期历史更新
+    dataManager.onUpdate('recent-history', (data) => {
+        console.log('近期历史更新回调触发');
+        updateRecentHistory(data);
+    });
+
+    // 注册活跃工作流更新
+    dataManager.onUpdate('active-workflow', (data) => {
+        console.log('活跃工作流更新回调触发');
+        const activeWorkflows = data.system.workflows_overview.value.active_workflows;
+        if (activeWorkflows.length > 0) {
+            updateActiveWorkflow(activeWorkflows[0], data);  // 显示第一个活跃工作流
+            updateOtherWorkflows(data);  // 更新其他活跃工作流
         }
     });
 
-    // 获取初始数据来注册工作流回调
-    try {
-        const initialData = await MonitorAPI.getAllData();
-        console.log('获取初始数据:', initialData);
-        
-        // 注册工作流更新
-        if (initialData && initialData.workflows) {
-            Object.keys(initialData.workflows).forEach(workflowId => {
-                console.log('注册工作流更新:', workflowId);
-                dataManager.onUpdate(`workflow-${workflowId}`, (data) => {
-                    console.log('工作流更新回调触发:', workflowId);
-                    updateActiveWorkflow(workflowId, data);
-                });
-            });
-        }
+    // 注册最近完成工作流更新
+    dataManager.onUpdate('completed-workflow', (data) => {
+        console.log('最近完成工作流更新回调触发');
+        updateLatestCompletedWorkflow(data);
+    });
 
-        // 启动自动刷新
-        console.log('启动数据刷新');
-        dataManager.startAutoRefresh(1000);
-    } catch (error) {
-        console.error('初始化失败:', error);
-        document.getElementById('callback-status').textContent = '初始化失败';
-    }
+    // 注册历史工作流更新
+    dataManager.onUpdate('history-workflows', (data) => {
+        console.log('历史工作流更新回调触发');
+        updateHistoryWorkflows(data);
+    });
+
+    // 启动自动刷新
+    console.log('启动数据刷新');
+    dataManager.startAutoRefresh(1000);
 }); 

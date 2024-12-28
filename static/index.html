@@ -231,5 +231,20 @@
     <script type="module" src="/static/js/api.js"></script>
     <script type="module" src="/static/js/workflow.js"></script>
     <script type="module" src="/static/js/main.js"></script>
+
+    <!-- 在 body 末尾添加 Modal -->
+    <div class="modal fade" id="contentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">内容详情</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html> 
