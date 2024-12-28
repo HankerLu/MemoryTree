@@ -152,9 +152,9 @@ async def global_exception_handler(request, exc):
 async def get_all_monitor_data():
     """获取所有监控数据"""
     try:
-        # data = await monitor_pool.get_data()
+        data = await monitor_pool.get_data()
         # 先试用模拟数据
-        data = await monitor_pool.get_mock_data()
+        # data = await monitor_pool.get_mock_data()
         return data
     except Exception as e:
         logger.error(f"获取监控数据失败: {str(e)}")

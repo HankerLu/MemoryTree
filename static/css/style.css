@@ -6,12 +6,12 @@ body {
 
 .card {
     margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* 对话区域样式 */
 .chat-history {
-    height: 400px;
+    height: 450px !important;
     overflow-y: auto;
     padding: 10px;
 }
@@ -20,6 +20,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 100%;
 }
 
 .message {
@@ -49,7 +50,7 @@ body {
 
 /* 用户输入分析区域 */
 .user-input-analysis {
-    height: 100px;
+    height: 120px !important;
     overflow-y: auto;
     padding: 10px;
 }
@@ -63,10 +64,10 @@ body {
 
 /* 近期历史对话区域 */
 .recent-history {
-    min-height: 150px;
-    max-height: 400px;
+    height: 320px !important;
     overflow-y: auto;
-    padding: 10px;
+    padding: 10px;/* 空状态样式 */
+
 }
 
 .recent-messages {
@@ -126,7 +127,7 @@ body {
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .log-card .time {
@@ -169,7 +170,7 @@ body {
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .result-card .node-type {
@@ -295,7 +296,7 @@ body {
 /* 调整卡片间距 */
 .card {
     margin-bottom: 1rem;
-    height: calc(100% - 1rem);
+    height: auto;
 }
 
 .mb-4 {
@@ -309,11 +310,37 @@ body {
     height: 100%;
 }
 
-/* 系统状态概览区域 */
-.system-overview {
-    height: 250px;
+/* 左侧区域 */
+.chat-history {
+    height: 450px !important;
+    overflow-y: auto;
+    padding: 10px;
 }
 
+.message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+}
+
+.user-input-analysis {
+    height: 120px !important;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+/* 右侧区域 */
+.system-overview {
+    height: 250px !important;
+    overflow-y: auto;
+    padding: 10px;
+}
+.recent-history {
+    height: 320px !important;
+    overflow-y: auto;
+    padding: 10px;
+}
 /* 确保卡片占满剩余空间 */
 .card {
     margin-bottom: 1rem;
@@ -372,7 +399,21 @@ body {
     max-width: 100%;
     height: auto;
 }
+/* Narrative 内容样式 */
+.narrative-content {
+    padding: 15px;
+    background: white;
+    border-radius: 4px;
+    line-height: 1.6;
+}
 
+.narrative-content p {
+    margin-bottom: 1rem;
+}
+
+.narrative-content p:last-child {
+    margin-bottom: 0;
+}
 /* Modal 样式 */
 .modal-body {
     max-height: 80vh;
@@ -388,7 +429,7 @@ body {
     background: white;
     padding: 15px;
     border-radius: 4px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .modal-body svg {
