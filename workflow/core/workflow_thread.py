@@ -260,6 +260,13 @@ class WorkflowThread:
             work_unit["status"] = "completed"
             logger.info(f"分析任务完成: {work_unit['id']}")
 
+            # 通过 status_callback 更新状态 - 这里缺少了状态回调！
+            if hasattr(self, '_status_callback') and self._status_callback:
+                await self._status_callback(work_unit['id'], {
+                    "status": "completed",
+                    "results": work_unit["results"]
+                })
+
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(
                 category="workflow",
@@ -276,6 +283,13 @@ class WorkflowThread:
 
         except Exception as e:
             logger.error(f"分析任务失败: {str(e)}")
+
+            # 同样需要通过 status_callback 更新失败状态
+            if hasattr(self, '_status_callback') and self._status_callback:
+                await self._status_callback(work_unit['id'], {
+                    "status": "failed",
+                    "error": str(e)
+                })
 
             # 添加监控点：工作单元工作流状态
             await monitor_pool.record(

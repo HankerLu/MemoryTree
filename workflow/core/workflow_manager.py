@@ -46,25 +46,7 @@ class WorkflowManager:
             self.work_units[unit_id] = work_unit
 
             # 添加监控点：更新系统工作流状态
-            await monitor_pool.record(
-                category="system",
-                key="workflows_overview",
-                value={
-                    "all_workflows": list(self.work_units.keys()),
-                    "active_workflows": [
-                        wid for wid, unit in self.work_units.items()
-                        if unit["status"] in ["pending", "processing"]
-                    ],
-                    "completed_workflows": [
-                        wid for wid, unit in self.work_units.items()
-                        if unit["status"] == "completed"
-                    ],
-                    "failed_workflows": [
-                        wid for wid, unit in self.work_units.items()
-                        if unit["status"] == "failed"
-                    ]
-                }
-            )
+            await self._update_workflows_overview()
 
         # 在新线程中启动工作流处理
         loop = asyncio.get_event_loop()
@@ -101,28 +83,16 @@ class WorkflowManager:
             # 更新状态为处理中
             async with self._lock:
                 work_unit = self.work_units[unit_id]
+
+                logger.info(f"工作流 {unit_id} 开始处理")
+                logger.info(f"原始状态: {work_unit.get('status', 'unknown')}")
+
                 work_unit["status"] = "processing"
 
+                logger.info(f"更新为处理中状态: {work_unit['status']}")
+
                 # 添加监控点：更新系统工作流状态
-                await monitor_pool.record(
-                    category="system",
-                    key="workflows_overview",
-                    value={
-                        "all_workflows": list(self.work_units.keys()),
-                        "active_workflows": [
-                            wid for wid, unit in self.work_units.items()
-                            if unit["status"] in ["pending", "processing"]
-                        ],
-                        "completed_workflows": [
-                            wid for wid, unit in self.work_units.items()
-                            if unit["status"] == "completed"
-                        ],
-                        "failed_workflows": [
-                            wid for wid, unit in self.work_units.items()
-                            if unit["status"] == "failed"
-                        ]
-                    }
-                )
+                await self._update_workflows_overview()
 
             # 处理工作单元
             result = await self.workflow_thread.process(
@@ -132,7 +102,18 @@ class WorkflowManager:
 
             # 更新处理结果
             async with self._lock:
+                logger.info(f"工作流 {unit_id} 处理完成")
+                logger.info(f"处理结果: {result.get('status', 'unknown')}")
                 self.work_units[unit_id].update(result)
+
+                # 只更新主要状态
+                if result.get("status") == "failed":
+                    self.work_units[unit_id]["status"] = "failed"
+                else:
+                    self.work_units[unit_id]["status"] = "completed"
+
+                logger.info(f"最终状态: {self.work_units[unit_id]['status']}")
+                await self._update_workflows_overview()  # 需要添加这行
 
         except Exception as e:
             logger.error(f"工作单元处理失败: {str(e)}")
@@ -141,25 +122,7 @@ class WorkflowManager:
                 self.work_units[unit_id]["error"] = str(e)
 
                 # 添加监控点：更新系统工作流状态
-                await monitor_pool.record(
-                    category="system",
-                    key="workflows_overview",
-                    value={
-                        "all_workflows": list(self.work_units.keys()),
-                        "active_workflows": [
-                            wid for wid, unit in self.work_units.items()
-                            if unit["status"] in ["pending", "processing"]
-                        ],
-                        "completed_workflows": [
-                            wid for wid, unit in self.work_units.items()
-                            if unit["status"] == "completed"
-                        ],
-                        "failed_workflows": [
-                            wid for wid, unit in self.work_units.items()
-                            if unit["status"] == "failed"
-                        ]
-                    }
-                )
+                await self._update_workflows_overview()
 
     async def _update_status(self, unit_id: str, status_update: Dict[str, Any]):
         """更新工作单元状态"""
@@ -167,6 +130,7 @@ class WorkflowManager:
             async with self._lock:
                 if unit_id in self.work_units:
                     self.work_units[unit_id].update(status_update)
+
         except Exception as e:
             logger.error(f"状态更新失败: {str(e)}")
 
@@ -244,7 +208,7 @@ class WorkflowManager:
             logger.error(f"获取SVG结果出错: {str(e)}")
             return None
 
-    def cleanup_old_units(self, max_age_hours: int = 24):
+    async def cleanup_old_units(self, max_age_hours: int = 24):
         """清理旧的工作单元"""
         now = datetime.now()
         to_delete = []
@@ -258,6 +222,42 @@ class WorkflowManager:
         for unit_id in to_delete:
             del self.work_units[unit_id]
 
+        # 添加监控点：更新系统工作流状态
+        await self._update_workflows_overview()
+
     def __del__(self):
         """清理资源"""
         self._executor.shutdown(wait=False)
+
+    # 添加新的辅助方法
+    async def _update_workflows_overview(self):
+        """更新工作流概览监控点"""
+        # 添加详细的状态日志
+        logger.info("=== 工作流状态更新 ===")
+        for wid, unit in self.work_units.items():
+            logger.info(f"工作流 {wid}: status={unit.get('status', 'unknown')}")
+
+        # 构建概览数据
+        overview = {
+            "all_workflows": list(self.work_units.keys()),
+            "active_workflows": [
+                wid for wid, unit in self.work_units.items()
+                if unit.get("status") in ["pending", "processing"]
+            ],
+            "completed_workflows": [
+                wid for wid, unit in self.work_units.items()
+                if unit.get("status") == "completed"
+            ],
+            "failed_workflows": [
+                wid for wid, unit in self.work_units.items()
+                if unit.get("status") == "failed"
+            ]
+        }
+
+        logger.info(f"工作流概览数据: {overview}")
+
+        await monitor_pool.record(
+            category="system",
+            key="workflows_overview",
+            value=overview
+        )
