@@ -1,0 +1,361 @@
+/* 基础样式 */
+body {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 对话区域样式 */
+.chat-history {
+    height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 85%;
+}
+
+.message.user {
+    background-color: #e3f2fd;
+    align-self: flex-end;
+    margin-left: 15%;
+}
+
+.message.assistant {
+    background-color: #f5f5f5;
+    align-self: flex-start;
+    margin-right: 15%;
+}
+
+.message-time {
+    font-size: 0.8em;
+    color: #666;
+    text-align: right;
+    margin-top: 4px;
+}
+
+/* 用户输入分析区域 */
+.user-input-analysis {
+    height: 100px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.rag-result {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+/* 近期历史对话区域 */
+.recent-history {
+    min-height: 150px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.recent-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.history-message {
+    font-size: 0.9em;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: baseline;
+}
+
+.history-message .time {
+    color: #666;
+    font-size: 0.85em;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.history-message .role {
+    font-weight: 500;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.history-message .content {
+    color: #333;
+    flex-grow: 1;
+    word-break: break-word;
+}
+
+/* 交替背景色 */
+.history-message:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+/* 工作流区域样式 */
+.log-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 10px;
+    min-height: 120px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.log-card {
+    flex: 0 0 auto;
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.log-card .time {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.log-card .status {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.status.processing {
+    color: #2196F3;
+}
+
+.status.completed {
+    color: #4CAF50;
+}
+
+.status.failed {
+    color: #f44336;
+}
+
+/* 结果卡片流区域 */
+.cards-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 15px;
+    min-height: 120px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.result-card {
+    flex: 0 0 auto;
+    width: 250px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.result-card .node-type {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.content-detail {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.content-detail.hidden {
+    display: none;
+}
+
+/* 系统状态样式 */
+.workflow-stats {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.workflow-stats .col {
+    text-align: center;
+    padding: 5px;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 空状态样式 */
+.text-center.text-muted {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #6c757d;
+}
+
+.text-center.text-muted i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    opacity: 0.7;
+}
+
+.text-center.text-muted p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .log-card, .result-card {
+        width: 180px;
+    }
+}
+
+/* 卡片高度对齐 */
+.h-100 {
+    height: 100% !important;
+}
+
+/* 调整间距 */
+.g-3 {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+}
+
+/* 调整卡片内容区域高度 */
+.chat-history {
+    height: 400px;
+}
+
+.user-input-analysis,
+.recent-history {
+    height: 100px;
+}
+
+/* 确保内容垂直居中 */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.75rem;
+}
+
+/* 调整空状态垂直居中 */
+.text-center.text-muted {
+    margin: auto;
+}
+
+/* 调整滚动区域 */
+.message-container,
+.user-input-analysis,
+.recent-history {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* 调整卡片间距 */
+.card {
+    margin-bottom: 1rem;
+    height: calc(100% - 1rem);
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* 系统状态区布局 */
+.system-status-row {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* 系统状态概览区域 */
+.system-overview {
+    height: 250px;
+}
+
+/* 确保卡片占满剩余空间 */
+.card {
+    margin-bottom: 1rem;
+    height: calc(100% - 1rem);
+}
+
+/* 调整上下间距 */
+.mt-3 {
+    margin-top: 0.75rem !important;
+}
+
+/* 确保底部对齐的卡片组 */
+.bottom-aligned-cards {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom-aligned-cards .card:last-child {
+    margin-bottom: 0;
+}
+
+/* 区域标题样式 */
+.execution-log h6,
+.result-cards h6 {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background-color: #eee;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* 工作流信息区域 */
+.workflow-info {
+    padding: 10px;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+/* 状态标签样式 */
+.workflow-status {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+} 

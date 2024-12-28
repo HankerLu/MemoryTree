@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Tree 监控系统</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- 顶部标题 -->
+        <header class="row py-3">
+            <div class="col">
+                <h1 class="text-center">Memory Tree 监控系统</h1>
+            </div>
+        </header>
+
+        <!-- 系统状态区 -->
+        <div class="row mb-4">
+            <!-- 左侧：系统对话历史 -->
+            <div class="col-md-6">
+                <div class="system-status-row">
+                    <div class="card flex-grow-1">
+                        <div class="card-header">系统对话历史</div>
+                        <div class="card-body chat-history">
+                            <div class="message-container">
+                                <!-- 初始状态 -->
+                                <div class="text-center text-muted py-3">
+                                    <i class="bi bi-chat-dots"></i>
+                                    <p>暂无对话历史</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-3">
+                        <div class="card-header">处理的用户输入</div>
+                        <div class="card-body user-input-analysis">
+                            <!-- 初始状态 -->
+                            <div class="text-center text-muted py-3">
+                                <i class="bi bi-search"></i>
+                                <p>暂无处理数据</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 右侧：系统状态概览 -->
+            <div class="col-md-6">
+                <div class="system-status-row">
+                    <div class="card flex-grow-1">
+                        <div class="card-header">系统状态概览</div>
+                        <div class="card-body system-overview">
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label>运行时间:</label>
+                                    <span id="system-runtime">--</span>
+                                </div>
+                                <div class="col-6">
+                                    <label>系统状态:</label>
+                                    <span id="system-status">--</span>
+                                </div>
+                            </div>
+                            <div class="workflow-stats">
+                                <h6>工作流概览</h6>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label>总数:</label>
+                                        <span id="workflow-total">0</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <label>活跃:</label>
+                                        <span id="workflow-active">0</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <label>完成:</label>
+                                        <span id="workflow-completed">0</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <label>失败:</label>
+                                        <span id="workflow-failed">0</span>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <label>活跃工作流ID:</label>
+                                    <div id="active-workflow-ids" class="small">--</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-3">
+                        <div class="card-header">近期历史对话</div>
+                        <div class="card-body recent-history">
+                            <!-- 初始状态 -->
+                            <div class="text-center text-muted py-3">
+                                <i class="bi bi-clock-history"></i>
+                                <p>暂无历史对话</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 活跃工作流区 -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">活跃工作流</div>
+                    <div class="card-body active-workflow">
+                        <div class="workflow-info">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="workflow-id">工作流 #<span>--</span></h5>
+                                <span class="workflow-status badge bg-secondary">--</span>
+                            </div>
+                        </div>
+                        <div class="execution-log mt-3">
+                            <h6>执行日志流</h6>
+                            <div class="log-container">
+                                <!-- 日志卡片将在这里动态插入 -->
+                            </div>
+                        </div>
+                        <div class="result-cards mt-3">
+                            <h6>结果卡片流</h6>
+                            <div class="cards-container">
+                                <!-- 结果卡片将在这里动态插入 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他活跃工作流（可折叠） -->
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header" id="otherWorkflows">
+                        <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#otherWorkflowsContent">
+                            ▼ 其他活跃工作流 (<span class="other-workflow-count">0</span>)
+                        </button>
+                    </div>
+                    <div id="otherWorkflowsContent" class="collapse">
+                        <div class="card-body other-workflows">
+                            <!-- 其他工作流将动态插入 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 历史记录区（切换面板） -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#recentComplete">最近完成</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#historyWorkflow">历史工作流</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="recentComplete">
+                                <div class="recent-workflow">
+                                    <div class="workflow-info">
+                                        <h5>最近完成工作流 #<span class="workflow-id">--</span></h5>
+                                        <div class="execution-time">
+                                            <label>执行时间:</label>
+                                            <span>--</span>
+                                        </div>
+                                    </div>
+                                    <div class="execution-log mt-3">
+                                        <h6>执行日志流</h6>
+                                        <div class="log-container">
+                                            <!-- 日志卡片将在这里动态插入 -->
+                                        </div>
+                                    </div>
+                                    <div class="result-cards mt-3">
+                                        <h6>结果卡片流</h6>
+                                        <div class="cards-container">
+                                            <!-- 结果卡片将在这里动态插入 -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="historyWorkflow">
+                                <div class="workflow-search mb-3">
+                                    <h6>工作流查询</h6>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="输入工作流ID">
+                                        <button class="btn btn-primary" type="button">查询</button>
+                                    </div>
+                                </div>
+                                <div class="recent-history">
+                                    <h6>最近历史</h6>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>类型</th>
+                                                    <th>状态</th>
+                                                    <th>时间</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="history-workflow-list">
+                                                <!-- 历史记录将在这里动态插入 -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 自定义脚本 -->
+    <script type="module" src="/static/js/api.js"></script>
+    <script type="module" src="/static/js/workflow.js"></script>
+    <script type="module" src="/static/js/main.js"></script>
+</body>
+</html> 

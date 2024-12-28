@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi.staticfiles import StaticFiles
+from pydantic import ValidationError
 from typing import Dict
 from utils.logger import logger
 from models.api_models import (
@@ -33,6 +34,8 @@ app.add_middleware(
 # 初始化服务
 workflow_service = WorkflowService()
 chat_service = ChatService(workflow_service.workflow_manager)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.post("/chat", response_model=ChatResponse, name="chat")
@@ -149,7 +152,9 @@ async def global_exception_handler(request, exc):
 async def get_all_monitor_data():
     """获取所有监控数据"""
     try:
-        data = await monitor_pool.get_data()
+        # data = await monitor_pool.get_data()
+        # 先试用模拟数据
+        data = await monitor_pool.get_mock_data()
         return data
     except Exception as e:
         logger.error(f"获取监控数据失败: {str(e)}")
